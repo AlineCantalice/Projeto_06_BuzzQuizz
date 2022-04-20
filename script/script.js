@@ -9,10 +9,9 @@ const expressaoValidaHex = /^#([0-9a-f]{3}){1,2}$/i;
 const verificaHex = new RegExp(expressaoValidaHex);
 
 function pegarquizzes () {
-    alert("eai?")
     const promisse = axios.get("https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes")
     promisse.then(renderizarposts)
-    promisse.catch(deuruim)
+    promisse.catch(atualizar)
 }
 pegarquizzes ()
 function renderizarposts (response){
@@ -24,8 +23,8 @@ function renderizarposts (response){
         // listaposts.innerHTML+=`<div class='post' style="background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(${posts[i].image});background-size: 100% 100%;"> <div class="texto_posts"> ${posts[i].title} </div> </div>`
     }
 }
-function deuruim (){
-    alert("Deu ruim!")
+function atualizar (){
+    window.location.reload()
 }
 function pegarInformacoesBasicas(){
     titulo = document.dados.titulo;

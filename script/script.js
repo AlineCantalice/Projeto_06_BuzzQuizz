@@ -2,9 +2,11 @@ let titulo;
 let urlImagem;
 let qtdPerguntas;
 let qtdNiveis;
-const expressao =
+const expressaoValidaUrl =
     /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
-const verificaUrl = new RegExp(expressao);
+const verificaUrl = new RegExp(expressaoValidaUrl);
+const expressaoValidaHex = /^#([0-9a-f]{3}){1,2}$/i;
+const verificaHex = new RegExp(expressaoValidaHex);
 
 function pegarInformacoesBasicas(){
     titulo = document.dados.titulo;
@@ -13,6 +15,10 @@ function pegarInformacoesBasicas(){
     qtdNiveis = document.dados.qtdNiveis;
 
     validarDados();
+}
+
+function pegarPerguntas(){
+
 }
 
 function validarDados(){

@@ -42,13 +42,49 @@
                 <input class="url-imagem" name="urlImagem" type="url" placeholder="URL da imagem do seu quizz">
                 <input class="qtd-perguntas" name="qtdPerguntas" type="number" placeholder="Quantidade de perguntas do quizz" min="3">
                 <input class="qtd-niveis" name="qtdNiveis" type="number" placeholder="Quantidade de níveis do quizz" min="2">
+    <main>
+        <section class="criar-quizz">
+            <div class="info-basica esconder">
+                <h2><strong>Comece pelo começo</strong></h2>
+                <div class="input">
+                    <input class="titulo" type="text" placeholder="Título do seu quizz" minlength="20" maxlength="65">
+                    <input class="url-imagem" type="url" placeholder="URL da imagem do seu quizz">
+                    <input class="qtd-perguntas" type="number" placeholder="Quantidade de perguntas do quizz" min="3">
+                    <input class="qtd-niveis" type="number" placeholder="Quantidade de níveis do quizz" min="2">
+                </div>
+                <button class="botao" onclick="pegarInformacoesBasicas();">Prosseguir pra criar perguntas</button>
             </div>
-            <div type="submit" onclick="pegarInformacoesBasicas()" class="botao">
-                <p>Prosseguir pra criar perguntas</p>
+            <div class="info-basica perguntas">
+                <h2><strong>Crie suas perguntas</strong></h2>
+                <div class="input">
+                    <h3>Pergunta 1</h3>
+                    <input type="text" placeholder="Texto da pergunta" class="textoP1" minlength="20">
+                    <input type="text" placeholder="Cor de fundo da pergunta" class="corP1">
+                    <h3>Resposta correta</h3>
+                    <input type="text" placeholder="Resposta correta" class="corretaP1">
+                    <input type="url" placeholder="URL da imagem" class="corretaURL-P1">
+                    <h3>Respostas incorretas</h3>
+                    <div class="incorreta">
+                        <input type="text" placeholder="Resposta incorreta 1" class="incorretaP1-1">
+                        <input type="url" placeholder="URL da imagem 1" class="incorretaP1-1URL">
+                    </div>
+                    <div class="incorreta">
+                        <input type="text" placeholder="Resposta incorreta 2" class="incorretaP1-2">
+                        <input type="url" placeholder="URL da imagem 2" class="incorretaP1-2URL">
+                    </div>
+                    <div class="incorreta">
+                        <input type="text" placeholder="Resposta incorreta 3" class="incorretaP1-3">
+                        <input type="url" placeholder="URL da imagem 3" class="incorretaP1-3URL">
+                    </div>
+                </div>
+                <button class="botao" onclick="pegarPerguntas();">Prosseguir pra criar níveis</button>
             </div>
         </form>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+        </section>
+    </main>
     <script src="script/script.js"></script>
 </body>
 

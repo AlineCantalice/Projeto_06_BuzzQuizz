@@ -16,20 +16,22 @@
     </header>
 
     <section class="criar-quizz">
-        <form class="info-basica" action="pagina de ação" method="post" name="dados" onsubmit="pegarInformacoesBasicas();">
+        <form class="info-basica" action="pagina de ação" method="post" name="dados">
             <h2><strong>Comece pelo começo</strong></h2>
             <div class="input">
-                <input class="titulo" name="titulo" type="text" placeholder="Título do seu quizz" minlength="20" maxlength="65">
+                <input class="titulo" name="titulo" type="text" placeholder="Título do seu quizz" minlength="20"
+                    maxlength="65">
                 <input class="url-imagem" name="urlImagem" type="url" placeholder="URL da imagem do seu quizz">
-                <input class="qtd-perguntas" name="qtdPerguntas" type="number" placeholder="Quantidade de perguntas do quizz" min="3">
-                <input class="qtd-niveis" name="qtdNiveis" type="number" placeholder="Quantidade de níveis do quizz" min="2">
+                <input class="qtd-perguntas" name="qtdPerguntas" type="number"
+                    placeholder="Quantidade de perguntas do quizz" min="3">
+                <input class="qtd-niveis" name="qtdNiveis" type="number" placeholder="Quantidade de níveis do quizz"
+                    min="2">
             </div>
-            <div type="submit" onclick="pegarInformacoesBasicas()" class="botao">
+            <div onclick="pegarInformacoesBasicas()" class="botao">
                 <p>Prosseguir pra criar perguntas</p>
             </div>
         </form>
     </section>
-
     <script src="script/script.js"></script>
 </body>
 

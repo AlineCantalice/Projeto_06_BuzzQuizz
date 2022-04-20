@@ -1,12 +1,36 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
     <title>BuzzQuizz</title>
 </head>
+
 <body>
-    
+    <header>
+        <h1>BuzzQuizz</h1>
+    </header>
+
+    <section class="criar-quizz">
+        <form class="info-basica" action="pagina de ação" method="post" name="dados" onsubmit="pegarInformacoesBasicas();">
+            <h2><strong>Comece pelo começo</strong></h2>
+            <div class="input">
+                <input class="titulo" name="titulo" type="text" placeholder="Título do seu quizz" minlength="20" maxlength="65">
+                <input class="url-imagem" name="urlImagem" type="url" placeholder="URL da imagem do seu quizz">
+                <input class="qtd-perguntas" name="qtdPerguntas" type="number" placeholder="Quantidade de perguntas do quizz" min="3">
+                <input class="qtd-niveis" name="qtdNiveis" type="number" placeholder="Quantidade de níveis do quizz" min="2">
+            </div>
+            <div type="submit" onclick="pegarInformacoesBasicas()" class="botao">
+                <p>Prosseguir pra criar perguntas</p>
+            </div>
+        </form>
+    </section>
+
+    <script src="script/script.js"></script>
 </body>
+
 </html>

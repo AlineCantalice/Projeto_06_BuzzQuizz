@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+input {
+    outline: 0;
+    border-radius: 5px;
+    border: 1px solid #D1D1D1;
+    width: 564px;
+    height: 46px;
+    margin: 9px 0;
+    font-size: 19px;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+header {
+    width: 100%;
+    height: 69px;
+    background-color: #EC362D;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    font-size: 37px;
+    color: #FFFFFF;
+    font-weight: 700;
+}
+
+h2 {
+    margin-top: 71px;
+    font-size: 23px;
+    color: #000000;
+}
+
+strong {
+    font-weight: bold;
+}
+
+.criar-quizz {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-basica {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 48px;
+}
+
+.botao {
+    width: 369px;
+    height: 54px;
+    margin: 85px 0;
+    border-radius: 15px;
+    background-color: #EC362D;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.botao p {
+    font-size: 21px;
+    color: #FFF5F4;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}

@@ -8,8 +8,11 @@ const verificaUrl = new RegExp(expressaoValidaUrl);
 const expressaoValidaHex = /^#([0-9a-f]{3}){1,2}$/i;
 const verificaHex = new RegExp(expressaoValidaHex);
 
+
+/* Funções que estou utilizando */
+
 function pegarquizzes () {
-    const promisse = axios.get("https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes")
+    const promisse = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes")
     promisse.then(renderizarposts)
     promisse.catch(atualizar)
 }
@@ -19,13 +22,22 @@ function renderizarposts (response){
     console.log(response.data)
     const listaposts=document.querySelector(".lista_posts") 
     for(let i=0; i<posts.length;i++){
-        listaposts.innerHTML+=`<div class='post' style="background-image:url(${posts[i].image}};"> <div class="texto_posts"> ${posts[i].title} </div> </div>`
+        listaposts.innerHTML+=`<div class='post' onclick="pegarpost()" style="background-image:url(${posts[i].image}};"> <div class="texto_posts"> ${posts[i].title} </div> </div>`
         // listaposts.innerHTML+=`<div class='post' style="background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(${posts[i].image});background-size: 100% 100%;"> <div class="texto_posts"> ${posts[i].title} </div> </div>`
     }
+}
+function pegarpost(){
+    document.querySelector(".posts").style.display="none"
+    document.querySelector(".pagina_quizz").style.display="inherit"
 }
 function atualizar (){
     window.location.reload()
 }
+function criandoquizz (){
+    document.querySelector(".posts").style.display="none"
+    document.querySelector(".criar-quizz").style.display="inherit"
+}
+/* Funções que estou utilizando */
 function pegarInformacoesBasicas(){
     titulo = document.dados.titulo;
     urlImagem = document.dados.urlImagem;
@@ -66,8 +78,4 @@ function validarDados(){
         return false;
     }
     return true;
-}
-function criandoquizz (){
-    document.querySelector(".posts").style.display="none"
-    document.querySelector(".criar-quizz").style.display="inherit"
 }

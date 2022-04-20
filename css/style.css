@@ -33,11 +33,18 @@ h2 {
 strong {
     font-weight: bold;
 }
+/* Classes que estou utilizando */
 .posts{
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 77px;
+
+}
+.pagina_quizz{
+    background-color: green;
+    height: 1000px;
+    display: none;
 }
 .nossos_quizzes{
     display: flex;
@@ -80,6 +87,7 @@ strong {
     font-weight: 700;
     line-height: 23px;
     letter-spacing: 0em;
+    
 }
 .lista_posts{
     display: flex;
@@ -96,12 +104,15 @@ strong {
     margin-top: 12px;
     background-size: 100% 100%;
 }
-.texto_posts {
-    display: flex;
-    align-items: flex-end;
-    justify-content: left;
+.post::after{
+    content: '';
     position: absolute;
-    bottom: 0;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color:rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+.texto_posts {
     margin-bottom: 14px;
     margin-left: 18px;
     font-family: Roboto;
@@ -110,7 +121,7 @@ strong {
     line-height: 22px;
     letter-spacing: 0em;
     color: #fafafa;
-    background: rgba(0, 0, 0, 0.6);
+    z-index: 2;
 }
 .criar_quizz{
     font-family: Roboto;
@@ -128,6 +139,7 @@ strong {
     margin-bottom: 33px;
 
 }
+/* Classes que estou utilizando */
 
 .criar-quizz {
     display: flex;

@@ -330,8 +330,8 @@ function renderizarposts(response) {
     }
 }
 function pegarpost(clicked_id) {
-    document.querySelector(".posts").style.display = "none"
-    document.querySelector(".pagina_quizz").style.display = "flex"
+    document.querySelector(".posts").classList.add("esconder")
+
     const promisse = axios.get(`${API}quizzes/${clicked_id}`)
     promisse.then(renderizarposts1)
     promisse.catch(atualizar)
@@ -346,8 +346,11 @@ function criandoquizz() {
 function renderizarposts1(response) {
     const posts = response.data
     console.log(posts)
-    const quiztopo = document.querySelector(".quiz_topo")
-    const quiz_conteudo = document.querySelector(".quiz_conteudo")
+    const pagina_quizz=document.querySelector(".pagina_quizz.esconder")
+    const quiz_conteudo=document.querySelector(".quiz_conteudo")
+    const quiztopo = document.querySelector(".quiz_topo.esconder")
+    pagina_quizz.classList.remove("esconder")
+    quiztopo.classList.remove("esconder")
     quiztopo.innerHTML = `<img src="${posts.image}" alt="">`
     for (let i = 0; i < posts.questions.length; i++) {
         quiz_conteudo.innerHTML += `<div class="container_pergunta">

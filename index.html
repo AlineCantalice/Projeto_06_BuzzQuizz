@@ -67,36 +67,54 @@
                 </div>
                 <input class="botao" type="submit" value="Prosseguir pra criar perguntas">
             </form>
-        </section>
-        <p class="error-validation template"></p>
 
-        <section class="criar-quizz esconder">
-            <form class="info-basica" action="" method="post" name="formPerguntas" onsubmit="pegarPerguntas();">
+            <form class="info-basica perguntas esconder" name="formPerguntas">
                 <h2><strong>Crie suas perguntas</strong></h2>
                 <div class="input">
                     <h3>Pergunta 1</h3>
-                    <input type="text" placeholder="Texto da pergunta" class="textoP1" minlength="20">
-                    <input type="text" placeholder="Cor de fundo da pergunta" class="corP1">
+                    <div class="campo">
+                        <input type="text" placeholder="Texto da pergunta" class="textoP1" minlength="20" required>
+                    </div>
+                    <div class="campo">
+                        <input type="text" placeholder="Cor de fundo da pergunta" class="corP1" hexvalidate required>
+                    </div>
                     <h3>Resposta correta</h3>
-                    <input type="text" placeholder="Resposta correta" class="corretaP1">
-                    <input type="url" placeholder="URL da imagem" class="corretaURL-P1">
+                    <div class="campo">
+                        <input type="text" placeholder="Resposta correta" class="corretaP1" required>
+                    </div>
+                    <div class="campo">
+                        <input type="url" placeholder="URL da imagem" class="corretaURL-P1" urlvalidate required>
+                    </div>
                     <h3>Respostas incorretas</h3>
                     <div class="incorreta">
-                        <input type="text" placeholder="Resposta incorreta 1" class="incorretaP1-1">
-                        <input type="url" placeholder="URL da imagem 1" class="incorretaP1-1URL">
+                        <div class="campo">
+                            <input type="text" placeholder="Resposta incorreta 1" class="incorretaP1-1" required>
+                        </div>
+                        <div class="campo">
+                            <input type="url" placeholder="URL da imagem 1" class="incorretaP1-1URL" urlvalidate required>
+                        </div>
                     </div>
                     <div class="incorreta">
-                        <input type="text" placeholder="Resposta incorreta 2" class="incorretaP1-2">
-                        <input type="url" placeholder="URL da imagem 2" class="incorretaP1-2URL">
+                        <div class="campo">
+                            <input type="text" placeholder="Resposta incorreta 2" class="incorretaP1-2" required>
+                        </div>
+                        <div class="campo">
+                            <input type="url" placeholder="URL da imagem 2" class="incorretaP1-2URL" urlvalidate required>
+                        </div>
                     </div>
                     <div class="incorreta">
-                        <input type="text" placeholder="Resposta incorreta 3" class="incorretaP1-3">
-                        <input type="url" placeholder="URL da imagem 3" class="incorretaP1-3URL">
+                        <div class="campo">
+                            <input type="text" placeholder="Resposta incorreta 3" class="incorretaP1-3" required>
+                        </div>
+                        <div class="campo">
+                            <input type="url" placeholder="URL da imagem 3" class="incorretaP1-3URL" urlvalidate required>
+                        </div>
                     </div>
                 </div>
-                <button class="botao" type="submit">Prosseguir pra criar níveis</button>
+                <input class="botao" type="submit" value="Prosseguir pra criar níveis">
             </form>
         </section>
+        <p class="error-validation template"></p>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="script/script.js"></script>

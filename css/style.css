@@ -42,9 +42,76 @@ strong {
 
 }
 .pagina_quizz{
-    background-color: green;
-    height: 1000px;
     display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.quiz_topo{
+    height: 227px;
+    width: 100%;
+}
+.quiz_topo img{
+    height: 227px;
+    width: 100%;
+    object-fit:cover;
+    object-position:50% 50%;
+}
+.quiz_conteudo{
+    margin-top: 69.61px;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    flex-direction: column;
+    border-radius: 0px;
+}
+.container_pergunta{
+    height: 676px;
+    width: 759px;
+    box-shadow: 0px 0px 10px 0px #0000000D;
+    padding: 28px 37px;
+}
+.pergunta{
+    height: 138px;
+    width: 689px;
+    border-radius: 0px;
+    font-family: Roboto;
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 27px;
+    letter-spacing: 0em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FFFFFF;
+}
+.resposta {
+    width: 330px;
+    margin-right: 12px;
+}
+.resposta p{
+    margin-top: 10px;
+    margin-bottom: 18px;
+    height: 34px;
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 23px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+.container_respostas{
+   margin-top: 20px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-wrap: wrap;
+}
+.imagens_resposta{
+    height: 176px;
+width: 330px;
+border-radius: 0px;
 }
 .nossos_quizzes{
     display: flex;

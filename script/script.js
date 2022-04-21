@@ -132,7 +132,82 @@ class Validacao {
     }
 }
 
+let titulo;
+let urlImagem;
+let qtdPerguntas;
+let qtdNiveis;
 
+
+let perguntas = {
+	title: titulo,
+	image: urlImagem,
+	questions: [
+		{
+			title: "Título da pergunta 1",
+			color: "#123456",
+			answers: [
+				{
+					text: "Texto da resposta 1",
+					image: "https://http.cat/411.jpg",
+					isCorrectAnswer: true
+				},
+				{
+					text: "Texto da resposta 2",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				}
+			]
+		},
+		{
+			title: "Título da pergunta 2",
+			color: "#123456",
+			answers: [
+				{
+					text: "Texto da resposta 1",
+					image: "https://http.cat/411.jpg",
+					isCorrectAnswer: true
+				},
+				{
+					text: "Texto da resposta 2",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				}
+			]
+		},
+		{
+			title: "Título da pergunta 3",
+			color: "#123456",
+			answers: [
+				{
+					text: "Texto da resposta 1",
+					image: "https://http.cat/411.jpg",
+					isCorrectAnswer: true
+				},
+				{
+					text: "Texto da resposta 2",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				}
+			]
+		}
+	],
+	levels: [
+		{
+			title: "Título do nível 1",
+			image: "https://http.cat/411.jpg",
+			text: "Descrição do nível 1",
+			minValue: 0
+		},
+		{
+			title: "Título do nível 2",
+			image: "https://http.cat/412.jpg",
+			text: "Descrição do nível 2",
+			minValue: 50
+		}
+	]
+}
+
+const API = 'https://mock-api.driven.com.br/api/v6/buzzquizz/';
 const formInfo = document.querySelector("form[name='infoBasica']");
 const submit = formInfo.querySelector(".info-basica .botao");
 const formPerguntas = document.querySelector("form[name='formPerguntas']");
@@ -166,28 +241,81 @@ function pegarInformacoesBasicas() {
 
         titulo = document.infoBasica.titulo;
         urlImagem = document.infoBasica.urlImagem;
-        qtdPerguntas = document.infoBasica.qtdPerguntas;
-        qtdNiveis = document.infoBasica.qtdNiveis;
-
-        console.log(formPerguntas);
+        qtdPerguntas = document.infoBasica.qtdPerguntas.value;
+        qtdNiveis = document.infoBasica.qtdNiveis.value;
 
         formInfo.classList.add("esconder");
         formPerguntas.classList.remove("esconder");
 
+        renderizarPerguntas();
 
 }
 
+function renderizarPerguntas(){
+    let secao = document.querySelector(".criar-quizz");
 
-let titulo;
-let urlImagem;
-let qtdPerguntas;
-let qtdNiveis;
+    for(let i=1; i<=qtdPerguntas.length; i++){
+        secao.innerHTML += `<form class="info-basica perguntas" name="formPerguntas">
+        <h2><strong>Crie suas perguntas</strong></h2>
+        <div class="input">
+            <h3>Pergunta ${i}</h3>
+            <div class="campo">
+                <input type="text" placeholder="Texto da pergunta" class="textoP${i}" minlength="20" required>
+            </div>
+            <div class="campo">
+                <input type="text" placeholder="Cor de fundo da pergunta" class="corP${i}" hexvalidate required>
+            </div>
+            <h3>Resposta correta</h3>
+            <div class="campo">
+                <input type="text" placeholder="Resposta correta" class="corretaP${i}" required>
+            </div>
+            <div class="campo">
+                <input type="url" placeholder="URL da imagem" class="corretaURL-P${i}" urlvalidate required>
+            </div>
+            <h3>Respostas incorretas</h3>
+            <div class="incorreta">
+                <div class="campo">
+                    <input type="text" placeholder="Resposta incorreta ${i}" class="incorretaP${i}-1" required>
+                </div>
+                <div class="campo">
+                    <input type="url" placeholder="URL da imagem ${i}" class="incorretaP${i}-1URL" urlvalidate required>
+                </div>
+            </div>
+            <div class="incorreta">
+                <div class="campo">
+                    <input type="text" placeholder="Resposta incorreta 2" class="incorretaP${i}-2">
+                </div>
+                <div class="campo">
+                    <input type="url" placeholder="URL da imagem 2" class="incorretaP${i}-2URL">
+                </div>
+            </div>
+            <div class="incorreta">
+                <div class="campo">
+                    <input type="text" placeholder="Resposta incorreta 3" class="incorretaP${i}-3">
+                </div>
+                <div class="campo">
+                    <input type="url" placeholder="URL da imagem 3" class="incorretaP${i}-3URL">
+                </div>
+            </div>
+        </div>
+        <input class="botao" type="submit" value="Prosseguir pra criar níveis">
+    </form>`
+    }
+}
+
+function pegarPerguntas(){
+    for(let i=1; i<=qtdPerguntas.length; i++){
+        perguntas.questions.title = formPerguntas.querySelector(`textoP${i}`).value;
+        perguntas.questions.color = formPerguntas.querySelector(`corP${i}`).value;
+    }
+}
+
 
 
 /* Funções que estou utilizando */
 
 function pegarquizzes() {
-    const promisse = axios.get("https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes")
+    const promisse = axios.get(`${API}quizzes`)
     promisse.then(renderizarposts)
     promisse.catch(atualizar)
 }
@@ -204,7 +332,7 @@ function renderizarposts(response) {
 function pegarpost(clicked_id) {
     document.querySelector(".posts").style.display = "none"
     document.querySelector(".pagina_quizz").style.display = "flex"
-    const promisse = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${clicked_id}`)
+    const promisse = axios.get(`${API}quizzes/${clicked_id}`)
     promisse.then(renderizarposts1)
     promisse.catch(atualizar)
 }

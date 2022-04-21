@@ -153,6 +153,9 @@ let urlImagem;
 let qtdPerguntas;
 let qtdNiveis;
 
+
+/* Funções que estou utilizando */
+
 function pegarquizzes() {
     const promisse = axios.get("https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes")
     promisse.then(renderizarposts)
@@ -164,20 +167,55 @@ function renderizarposts(response) {
     console.log(response.data)
     const listaposts = document.querySelector(".lista_posts")
     for (let i = 0; i < posts.length; i++) {
-        listaposts.innerHTML += `<div class='post' style="background-image:url(${posts[i].image}};"> <div class="texto_posts"> ${posts[i].title} </div> </div>`
+        listaposts.innerHTML += `<div class='post' id="${posts[i].id}" onclick="pegarpost(this.id)" style="background-image:url(${posts[i].image}};"> <div class="texto_posts"> ${posts[i].title} </div> </div>`
         // listaposts.innerHTML+=`<div class='post' style="background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(${posts[i].image});background-size: 100% 100%;"> <div class="texto_posts"> ${posts[i].title} </div> </div>`
     }
+}
+function pegarpost(clicked_id) {
+    document.querySelector(".posts").style.display = "none"
+    document.querySelector(".pagina_quizz").style.display = "flex"
+    const promisse = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${clicked_id}`)
+    promisse.then(renderizarposts1)
+    promisse.catch(atualizar)
 }
 function atualizar() {
     window.location.reload()
 }
+function criandoquizz() {
+    document.querySelector(".posts").style.display = "none"
+    document.querySelector(".criar-quizz").style.display = "inherit"
+}
+function renderizarposts1(response) {
+    const posts = response.data
+    console.log(posts)
+    const quiztopo = document.querySelector(".quiz_topo")
+    const quiz_conteudo = document.querySelector(".quiz_conteudo")
+    quiztopo.innerHTML = `<img src="${posts.image}" alt="">`
+    for (let i = 0; i < posts.questions.length; i++) {
+        quiz_conteudo.innerHTML += `<div class="container_pergunta">
+        <div class="pergunta" style="background-color:${posts.questions[i].color}"> 
+             ${posts.questions[i].title} 
+        </div>
+        <div class="container_respostas"> </div>
+        </div>`
+    }
+    const containerrespostas = document.querySelectorAll(".container_respostas")
+    for (let i = 0; i < containerrespostas.length; i++) {
+        console.log(posts.questions[i].answers)
+        for (let j = 0; j < posts.questions[i].answers.length; j++) {
+            containerrespostas[i].innerHTML += `<div class="resposta">
+        <img class="imagens_resposta" src="${posts.questions[i].answers[j].image}" alt="">
+        <p> ${posts.questions[i].answers[j].text} </p>
+        </div>`
+        }
+    }
+}
+/* Funções que estou utilizando */
 function pegarInformacoesBasicas() {
-
-
-    titulo = form["infoBasica"]["titulo"];
-    urlImagem = form["infoBasica"]["urlImagem"];
-    qtdPerguntas = form["infoBasica"]["qtdPerguntas"];
-    qtdNiveis = form["infoBasica"]["qtdNiveis"];
+    titulo = document.dados.titulo;
+    urlImagem = document.dados.urlImagem;
+    qtdPerguntas = document.dados.qtdPerguntas;
+    qtdNiveis = document.dados.qtdNiveis;
 
     validarDados();
 }
@@ -214,8 +252,4 @@ function validarDados() {
         return false;
     }
     return true;
-}
-function criandoquizz() {
-    document.querySelector(".posts").style.display = "none"
-    document.querySelector(".criar-quizz").style.display = "inherit"
 }

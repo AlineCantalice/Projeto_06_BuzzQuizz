@@ -38,13 +38,22 @@
             <form class="info-basica" name="infoBasica" onsubmit="pegarInformacoesBasicas(this.form)">
                 <h2><strong>Comece pelo começo</strong></h2>
                 <div class="input">
-                    <input class="titulo" name="titulo" type="text" placeholder="Título do seu quizz" minlength="20"
-                        maxlength="65">
-                    <input class="url-imagem" name="urlImagem" type="url" placeholder="URL da imagem do seu quizz">
-                    <input class="qtd-perguntas" name="qtdPerguntas" type="number"
-                        placeholder="Quantidade de perguntas do quizz" min="3">
-                    <input class="qtd-niveis" name="qtdNiveis" type="number" placeholder="Quantidade de níveis do quizz"
-                        min="2">
+                    <div class="campo">
+                        <input class="titulo" name="titulo" type="text" placeholder="Título do seu quizz" minlength="20"
+                            maxlength="65" required>
+                    </div>
+                    <div class="campo">
+                        <input class="url-imagem" name="urlImagem" type="url" placeholder="URL da imagem do seu quizz"
+                            required urlvalidate>
+                    </div>
+                    <div class="campo">
+                        <input class="qtd-perguntas" name="qtdPerguntas" type="number"
+                            placeholder="Quantidade de perguntas do quizz" minquantidade="3" required>
+                    </div>
+                    <div class="campo">
+                        <input class="qtd-niveis" name="qtdNiveis" type="number"
+                            placeholder="Quantidade de níveis do quizz" minquantidade="2" required>
+                    </div>
                 </div>
                 <input class="botao" type="submit" value="Prosseguir pra criar perguntas">
             </form>

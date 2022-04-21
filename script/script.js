@@ -1,19 +1,30 @@
 class Validacao {
-    constructor(){
+    constructor() {
         this.validacoes = [
+            'required',
             'minlength',
+            'maxlength',
+            'urlvalidate',
+            'hexvalidate',
+            'minquantidade'
         ]
     }
 
-    validar(form){
+    validar(form) {
+
+        let currentValidations = document.querySelectorAll("form .error-validation");
+
+        if (currentValidations.length > 0) {
+            this.cleanValidations(currentValidations);
+        }
 
         let inputs = document.getElementsByTagName("input");
         let inputsArray = [...inputs];
 
-        inputsArray.forEach(function(input){
+        inputsArray.forEach(function (input) {
 
-            for(let i=0; i<this.validacoes.length; i++){
-                if(input.getAttribute(this.validacoes[i]) !== null){
+            for (let i = 0; i < this.validacoes.length; i++) {
+                if (input.getAttribute(this.validacoes[i]) !== null) {
                     let metodo = this.validacoes[i];
                     let valor = input.getAttribute(this.validacoes[i]);
                     this[metodo](input, valor);
@@ -22,28 +33,106 @@ class Validacao {
         }, this);
     }
 
-    minlength(input, minvalue){
+    minlength(input, minvalue) {
 
         let inputLength = input.value.length;
 
         let mensagemErro = `O campo precisa ter pelo menos ${minvalue} caracteres`;
 
-        if(inputLength < minvalue){
+        if (inputLength < minvalue) {
             console.log(mensagemErro)
             this.printMensagem(input, mensagemErro);
         }
 
     }
 
-    printMensagem(input, msg){
-        let template = document.querySelector(".error-validation").cloneNode(true);
-        template.textContent = msg;
+    maxlength(input, maxvalue) {
 
-        let inputParent = input.parentNode;
+        let inputLength = input.value.length;
 
-        template.classList.remove("template");
+        let mensagemErro = `O campo precisa ter menos que ${maxvalue} caracteres`;
 
-        inputParent.appendChild(template);
+        if (inputLength > maxvalue) {
+            console.log(mensagemErro)
+            this.printMensagem(input, mensagemErro);
+        }
+
+    }
+
+    required(input) {
+        let inputvalue = input.value;
+
+        if (inputvalue === '') {
+            let mensagemErro = "Esse campo é de preenchimento obrigatório!";
+            this.printMensagem(input, mensagemErro);
+        }
+    }
+
+    urlvalidate(input) {
+        const expressaoValidaUrl =
+            /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+        const verificaUrl = new RegExp(expressaoValidaUrl);
+
+        let email = input.value;
+
+        let mensagemErro = "Insira uma URL válida!";
+
+        if (!expressaoValidaUrl.test(email)) {
+            this.printMensagem(input, mensagemErro);
+        }
+    }
+
+    hexvalidate(input) {
+        const expressaoValidaHex = /^#([0-9a-f]{3}){1,2}$/i;
+        const verificaHex = new RegExp(expressaoValidaHex);
+
+        let cor = input.value;
+
+        let mensagemErro = "Insira uma cor em hexadecimal válida!";
+
+        if (!expressaoValidaUrl.test(cor)) {
+            this.printMensagem(input, mensagemErro);
+        }
+    }
+
+    minquantidade(input, minvalue) {
+        let inputvalue = input.value;
+
+        let mensagemErro = '';
+
+        let classeInput = input.classList;
+
+        if (classeInput.value === "qtd-perguntas") {
+            mensagemErro = `Precisa preencher o campo com pelo menos ${minvalue} perguntas`;
+        }
+        if (classeInput.value === "qtd-niveis") {
+            mensagemErro = `Precisa preencher o campo com pelo menos ${minvalue} níveis`;
+        }
+
+        if (inputvalue < minvalue) {
+            console.log(mensagemErro)
+            this.printMensagem(input, mensagemErro);
+        }
+    }
+
+    printMensagem(input, msg) {
+
+        let erros = input.parentNode.querySelector(".error-validation");
+
+        if (erros === null) {
+            let template = document.querySelector(".error-validation").cloneNode(true);
+            template.textContent = msg;
+
+            let inputParent = input.parentNode;
+
+            template.classList.remove("template");
+
+            inputParent.appendChild(template);
+        }
+    }
+
+    cleanValidations(validacoes) {
+        validacoes.forEach(el => el.remove());
     }
 }
 
@@ -53,7 +142,7 @@ const submit = document.querySelector(".info-basica .botao");
 
 let validacao = new Validacao();
 
-submit.addEventListener('click', function(event){
+submit.addEventListener('click', function (event) {
     event.preventDefault();
     validacao.validar(formInfo);
 });
@@ -63,11 +152,6 @@ let titulo;
 let urlImagem;
 let qtdPerguntas;
 let qtdNiveis;
-const expressaoValidaUrl =
-    /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
-const verificaUrl = new RegExp(expressaoValidaUrl);
-const expressaoValidaHex = /^#([0-9a-f]{3}){1,2}$/i;
-const verificaHex = new RegExp(expressaoValidaHex);
 
 function pegarquizzes() {
     const promisse = axios.get("https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes")

@@ -157,13 +157,16 @@ form {
     margin: 85px 0;
 }
 
+.campo {
+    margin-bottom: 9px;
+}
+
 .input {
     margin-top: 20px;
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
     flex: 1 1 100%;
-    position: relative;
     width: 40vw;
     padding: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
@@ -174,9 +177,7 @@ form {
     border-radius: 5px;
     border: 1px solid #D1D1D1;
     height: 46px;
-    margin-bottom: 15px;
     padding: 15px;
-    position: relative;
 }
 
 .input h3 {
@@ -226,8 +227,6 @@ input[type=number] {
 
 .error-validation {
     color: #EC362D;
-    position: absolute;
-    top: 65px;
     font-size: 10px;
 }
 

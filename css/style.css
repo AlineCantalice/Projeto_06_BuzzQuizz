@@ -63,6 +63,7 @@ strong {
 }
 .quiz_conteudo{
     margin-top: 69.61px;
+    width: 60%;
     display: flex;
     align-items: center;
     justify-items: center;

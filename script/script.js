@@ -12,13 +12,13 @@ class Validacao {
 
     validar(form) {
 
-        let currentValidations = document.querySelectorAll("form .error-validation");
+        let currentValidations = form.querySelectorAll("form .error-validation");
 
         if (currentValidations.length > 0) {
             this.cleanValidations(currentValidations);
         }
 
-        let inputs = document.getElementsByTagName("input");
+        let inputs = form.getElementsByTagName("input");
         let inputsArray = [...inputs];
 
         inputsArray.forEach(function (input) {
@@ -40,7 +40,6 @@ class Validacao {
         let mensagemErro = `O campo precisa ter pelo menos ${minvalue} caracteres`;
 
         if (inputLength < minvalue) {
-            console.log(mensagemErro)
             this.printMensagem(input, mensagemErro);
         }
 
@@ -71,7 +70,6 @@ class Validacao {
     urlvalidate(input) {
         const expressaoValidaUrl =
             /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
-        const verificaUrl = new RegExp(expressaoValidaUrl);
 
         let email = input.value;
 
@@ -84,13 +82,12 @@ class Validacao {
 
     hexvalidate(input) {
         const expressaoValidaHex = /^#([0-9a-f]{3}){1,2}$/i;
-        const verificaHex = new RegExp(expressaoValidaHex);
 
         let cor = input.value;
 
         let mensagemErro = "Insira uma cor em hexadecimal válida!";
 
-        if (!expressaoValidaUrl.test(cor)) {
+        if (!expressaoValidaHex.test(cor)) {
             this.printMensagem(input, mensagemErro);
         }
     }
@@ -110,7 +107,6 @@ class Validacao {
         }
 
         if (inputvalue < minvalue) {
-            console.log(mensagemErro)
             this.printMensagem(input, mensagemErro);
         }
     }
@@ -136,28 +132,190 @@ class Validacao {
     }
 }
 
-
-const formInfo = document.querySelector("form[name='infoBasica']");
-const submit = document.querySelector(".info-basica .botao");
-
-let validacao = new Validacao();
-
-submit.addEventListener('click', function (event) {
-    event.preventDefault();
-    validacao.validar(formInfo);
-});
-
-
 let titulo;
 let urlImagem;
 let qtdPerguntas;
 let qtdNiveis;
 
 
+let perguntas = {
+	title: titulo,
+	image: urlImagem,
+	questions: [
+		{
+			title: "Título da pergunta 1",
+			color: "#123456",
+			answers: [
+				{
+					text: "Texto da resposta 1",
+					image: "https://http.cat/411.jpg",
+					isCorrectAnswer: true
+				},
+				{
+					text: "Texto da resposta 2",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				}
+			]
+		},
+		{
+			title: "Título da pergunta 2",
+			color: "#123456",
+			answers: [
+				{
+					text: "Texto da resposta 1",
+					image: "https://http.cat/411.jpg",
+					isCorrectAnswer: true
+				},
+				{
+					text: "Texto da resposta 2",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				}
+			]
+		},
+		{
+			title: "Título da pergunta 3",
+			color: "#123456",
+			answers: [
+				{
+					text: "Texto da resposta 1",
+					image: "https://http.cat/411.jpg",
+					isCorrectAnswer: true
+				},
+				{
+					text: "Texto da resposta 2",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				}
+			]
+		}
+	],
+	levels: [
+		{
+			title: "Título do nível 1",
+			image: "https://http.cat/411.jpg",
+			text: "Descrição do nível 1",
+			minValue: 0
+		},
+		{
+			title: "Título do nível 2",
+			image: "https://http.cat/412.jpg",
+			text: "Descrição do nível 2",
+			minValue: 50
+		}
+	]
+}
+
+const API = 'https://mock-api.driven.com.br/api/v6/buzzquizz/';
+const formInfo = document.querySelector("form[name='infoBasica']");
+const submit = formInfo.querySelector(".info-basica .botao");
+const formPerguntas = document.querySelector("form[name='formPerguntas']");
+const submitPerguntas = formPerguntas.querySelector(".info-basica .botao");
+
+let validacao = new Validacao();
+
+submit.addEventListener('click', function (event) {
+    event.preventDefault();
+    validacao.validar(formInfo);
+
+    let validado = formInfo.querySelectorAll(".error-validation").length;
+
+    if(validado === 0){
+        pegarInformacoesBasicas();
+    }
+});
+
+submitPerguntas.addEventListener('click', function (event) {
+    event.preventDefault();
+    validacao.validar(formPerguntas);
+
+    let validado = formPerguntas.querySelectorAll(".error-validation").length;
+
+    if(validado === 0){
+        console.log(formPerguntas)
+    }
+});
+
+function pegarInformacoesBasicas() {
+
+        titulo = document.infoBasica.titulo;
+        urlImagem = document.infoBasica.urlImagem;
+        qtdPerguntas = document.infoBasica.qtdPerguntas.value;
+        qtdNiveis = document.infoBasica.qtdNiveis.value;
+
+        formInfo.classList.add("esconder");
+        formPerguntas.classList.remove("esconder");
+
+        renderizarPerguntas();
+
+}
+
+function renderizarPerguntas(){
+    let secao = document.querySelector(".criar-quizz");
+
+    for(let i=1; i<=qtdPerguntas.length; i++){
+        secao.innerHTML += `<form class="info-basica perguntas" name="formPerguntas">
+        <h2><strong>Crie suas perguntas</strong></h2>
+        <div class="input">
+            <h3>Pergunta ${i}</h3>
+            <div class="campo">
+                <input type="text" placeholder="Texto da pergunta" class="textoP${i}" minlength="20" required>
+            </div>
+            <div class="campo">
+                <input type="text" placeholder="Cor de fundo da pergunta" class="corP${i}" hexvalidate required>
+            </div>
+            <h3>Resposta correta</h3>
+            <div class="campo">
+                <input type="text" placeholder="Resposta correta" class="corretaP${i}" required>
+            </div>
+            <div class="campo">
+                <input type="url" placeholder="URL da imagem" class="corretaURL-P${i}" urlvalidate required>
+            </div>
+            <h3>Respostas incorretas</h3>
+            <div class="incorreta">
+                <div class="campo">
+                    <input type="text" placeholder="Resposta incorreta ${i}" class="incorretaP${i}-1" required>
+                </div>
+                <div class="campo">
+                    <input type="url" placeholder="URL da imagem ${i}" class="incorretaP${i}-1URL" urlvalidate required>
+                </div>
+            </div>
+            <div class="incorreta">
+                <div class="campo">
+                    <input type="text" placeholder="Resposta incorreta 2" class="incorretaP${i}-2">
+                </div>
+                <div class="campo">
+                    <input type="url" placeholder="URL da imagem 2" class="incorretaP${i}-2URL">
+                </div>
+            </div>
+            <div class="incorreta">
+                <div class="campo">
+                    <input type="text" placeholder="Resposta incorreta 3" class="incorretaP${i}-3">
+                </div>
+                <div class="campo">
+                    <input type="url" placeholder="URL da imagem 3" class="incorretaP${i}-3URL">
+                </div>
+            </div>
+        </div>
+        <input class="botao" type="submit" value="Prosseguir pra criar níveis">
+    </form>`
+    }
+}
+
+function pegarPerguntas(){
+    for(let i=1; i<=qtdPerguntas.length; i++){
+        perguntas.questions.title = formPerguntas.querySelector(`textoP${i}`).value;
+        perguntas.questions.color = formPerguntas.querySelector(`corP${i}`).value;
+    }
+}
+
+
+
 /* Funções que estou utilizando */
 
 function pegarquizzes() {
-    const promisse = axios.get("https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes")
+    const promisse = axios.get(`${API}quizzes`)
     promisse.then(renderizarposts)
     promisse.catch(atualizar)
 }
@@ -174,7 +332,7 @@ function renderizarposts(response) {
 function pegarpost(clicked_id) {
     document.querySelector(".posts").style.display = "none"
     document.querySelector(".pagina_quizz").style.display = "flex"
-    const promisse = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${clicked_id}`)
+    const promisse = axios.get(`${API}quizzes/${clicked_id}`)
     promisse.then(renderizarposts1)
     promisse.catch(atualizar)
 }
@@ -211,45 +369,4 @@ function renderizarposts1(response) {
     }
 }
 /* Funções que estou utilizando */
-function pegarInformacoesBasicas() {
-    titulo = document.dados.titulo;
-    urlImagem = document.dados.urlImagem;
-    qtdPerguntas = document.dados.qtdPerguntas;
-    qtdNiveis = document.dados.qtdNiveis;
 
-    validarDados();
-}
-
-function pegarPerguntas() {
-    const form = document.forms;
-    console.log(form["formPerguntas"]);
-}
-
-function validarDados() {
-
-    if (titulo.value === '' || urlImagem.value === '' || qtdPerguntas.value === '' || qtdNiveis.value === '') {
-        alert("Preenchimento incorreto!! Campos vazios");
-        return false;
-    }
-    if (titulo.value.length < 20 || titulo.value.length > 65) {
-        alert("O titulo deve ser maior do que 20 caracteres e menor do que 65 caracteres");
-        titulo.focus();
-        return false;
-    }
-    if (!urlImagem.value.match(verificaUrl)) {
-        alert("url invalida!");
-        urlImagem.focus();
-        return false;
-    }
-    if (qtdPerguntas.value < 3) {
-        alert("Deve conter pelo menos 3 perguntas!");
-        qtdPerguntas.focus();
-        return false;
-    }
-    if (qtdNiveis.value < 2) {
-        alert("Deve conter pelo menos 2 níveis!");
-        qtdNiveis.focus();
-        return false;
-    }
-    return true;
-}

@@ -17,7 +17,6 @@
     <div class="quiz_topo esconder">
     </div>
     <main>
-        <!-- HTML que estou utilizando -->
         <section class="posts">
             <div class="nossos_quizzes">
                 <div>
@@ -37,32 +36,23 @@
             </div>
         </section>
         <section class="pagina_quizz esconder">
-        <div class="quiz_conteudo">
-    
-        </div>
+            <div class="quiz_conteudo">
+
+            </div>
         </section>
         <!-- HTML que estou utilizando -->
 
         <section class="criar-quizz">
-            <form class="info-basica" name="infoBasica">
+            <form class="info-basica" name="infoBasica" onsubmit="pegarInformacoesBasicas(this.form)">
                 <h2><strong>Comece pelo começo</strong></h2>
                 <div class="input">
-                    <div class="campo">
-                        <input class="titulo" name="titulo" type="text" placeholder="Título do seu quizz" minlength="20"
-                            maxlength="65" required>
-                    </div>
-                    <div class="campo">
-                        <input class="url-imagem" name="urlImagem" type="url" placeholder="URL da imagem do seu quizz"
-                            required urlvalidate>
-                    </div>
-                    <div class="campo">
-                        <input class="qtd-perguntas" name="qtdPerguntas" type="number"
-                            placeholder="Quantidade de perguntas do quizz" minquantidade="3" required>
-                    </div>
-                    <div class="campo">
-                        <input class="qtd-niveis" name="qtdNiveis" type="number"
-                            placeholder="Quantidade de níveis do quizz" minquantidade="2" required>
-                    </div>
+                    <input class="titulo" name="titulo" type="text" placeholder="Título do seu quizz" minlength="2"
+                        maxlength="6">
+                    <input class="url-imagem" name="urlImagem" type="url" placeholder="URL da imagem do seu quizz">
+                    <input class="qtd-perguntas" name="qtdPerguntas" type="number"
+                        placeholder="Quantidade de perguntas do quizz" min="3">
+                    <input class="qtd-niveis" name="qtdNiveis" type="number" placeholder="Quantidade de níveis do quizz"
+                        min="2">
                 </div>
                 <input class="botao" type="submit" value="Prosseguir pra criar perguntas">
             </form>
@@ -90,7 +80,8 @@
                             <input type="text" placeholder="Resposta incorreta 1" class="incorretaP1-1" required>
                         </div>
                         <div class="campo">
-                            <input type="url" placeholder="URL da imagem 1" class="incorretaP1-1URL" urlvalidate required>
+                            <input type="url" placeholder="URL da imagem 1" class="incorretaP1-1URL" urlvalidate
+                                required>
                         </div>
                     </div>
                     <div class="incorreta">

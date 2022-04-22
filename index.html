@@ -112,6 +112,42 @@
                 </div>
                 <input class="botao" type="submit" value="Prosseguir pra criar níveis">
             </form>
+
+            <form class="info-basica niveis esconder">
+                <h2>Agora, decida os niveis</h2>
+                <div class="input">
+                    <h3>Nível 1</h3>
+                    <input type="text" placeholder="Título do nível" class="lvlTitle1">
+                    <input type="text" placeholder="% de acerto mínima" class="acerto1">
+                    <input type="url" placeholder="URL da imagem do nível" class="URLlvl1">
+                    <textarea name="descricao" id="" cols="30" rows="10" placeholder="Descrição do nível" class="descLVL1"></textarea>
+                </div>
+                <div class="input">
+                    <div class="titulo-pergunta">   
+                        <h3 style="margin:0">Nível 2</h3>
+                        <img src="./assets/Vector (1).png" onclick="abrirLVL(this);">
+                    </div>
+                    <div class="level hide">
+                        <input type="text" placeholder="Título do nível" class="lvlTitle2">
+                        <input type="text" placeholder="% de acerto mínima" class="acerto2">
+                        <input type="url" placeholder="URL da imagem do nível" class="URLlvl2">
+                        <textarea name="descricao" id="" cols="30" rows="10" placeholder="Descrição do nível" class="descLVL2"></textarea>
+                    </div>
+                </div>
+                <div class="input">
+                    <div class="titulo-pergunta">
+                        <h3 style="margin: 0;">Nível 3</h3>
+                        <img src="./assets/Vector (1).png" onclick="abrirLVL(this);">
+                    </div>
+                    <div class="level hide">
+                        <input type="text" placeholder="Título do nível" class="lvlTitle3">
+                        <input type="text" placeholder="% de acerto mínima" class="acerto3">
+                        <input type="url" placeholder="URL da imagem do nível" class="URLlvl3">
+                        <textarea name="descricao" id="" cols="30" rows="10" placeholder="Descrição do nível" class="descLVL3"></textarea>
+                    </div>
+                </div>
+                <button onclick="finalizarQuizz()">Finalizar Quizz</button>
+            </form>
         </section>
         <p class="error-validation template"></p>
     </main>

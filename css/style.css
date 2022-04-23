@@ -7,6 +7,9 @@
 body {
     font-family: 'Roboto', sans-serif;
     font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 header {
@@ -272,15 +275,13 @@ strong {
 /* Classes que estou utilizando */
 
 .criar-quizz {
+    width: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    display: none;
-    margin: 0 auto;
 }
 
 form {
-    width: 100vh;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -405,7 +406,7 @@ input[type=number] {
         font-size: 20px;
     }
 
-    form {
+    .criar-quizz {
         width: 100%;
     }
 

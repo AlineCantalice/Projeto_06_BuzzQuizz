@@ -6,7 +6,8 @@ class Validacao {
             'maxlength',
             'urlvalidate',
             'hexvalidate',
-            'minquantidade'
+            'minquantidade',
+            'maxquantidade'
         ]
     }
 
@@ -52,7 +53,6 @@ class Validacao {
         let mensagemErro = `O campo precisa ter menos que ${maxvalue} caracteres`;
 
         if (inputLength > maxvalue) {
-            console.log(mensagemErro)
             this.printMensagem(input, mensagemErro);
         }
 
@@ -105,8 +105,21 @@ class Validacao {
         if (classeInput.value === "qtd-niveis") {
             mensagemErro = `Precisa preencher o campo com pelo menos ${minvalue} níveis`;
         }
+        if (classeInput.value === 'porcentagem') {
+            mensagemErro = `Precisa preencher o campo com um valor entre 0 e 100%`;
+        }
 
         if (inputvalue < minvalue) {
+            this.printMensagem(input, mensagemErro);
+        }
+    }
+
+    maxquantidade(input, maxvalue) {
+        let inputvalue = input.value;
+
+        let mensagemErro = `Precisa preencher o campo com um valor entre 0 e 100%`;
+
+        if (inputvalue > maxvalue) {
             this.printMensagem(input, mensagemErro);
         }
     }
@@ -139,79 +152,80 @@ let qtdNiveis;
 
 
 let perguntas = {
-	title: titulo,
-	image: urlImagem,
-	questions: [
-		{
-			title: "Título da pergunta 1",
-			color: "#123456",
-			answers: [
-				{
-					text: "Texto da resposta 1",
-					image: "https://http.cat/411.jpg",
-					isCorrectAnswer: true
-				},
-				{
-					text: "Texto da resposta 2",
-					image: "https://http.cat/412.jpg",
-					isCorrectAnswer: false
-				}
-			]
-		},
-		{
-			title: "Título da pergunta 2",
-			color: "#123456",
-			answers: [
-				{
-					text: "Texto da resposta 1",
-					image: "https://http.cat/411.jpg",
-					isCorrectAnswer: true
-				},
-				{
-					text: "Texto da resposta 2",
-					image: "https://http.cat/412.jpg",
-					isCorrectAnswer: false
-				}
-			]
-		},
-		{
-			title: "Título da pergunta 3",
-			color: "#123456",
-			answers: [
-				{
-					text: "Texto da resposta 1",
-					image: "https://http.cat/411.jpg",
-					isCorrectAnswer: true
-				},
-				{
-					text: "Texto da resposta 2",
-					image: "https://http.cat/412.jpg",
-					isCorrectAnswer: false
-				}
-			]
-		}
-	],
-	levels: [
-		{
-			title: "Título do nível 1",
-			image: "https://http.cat/411.jpg",
-			text: "Descrição do nível 1",
-			minValue: 0
-		},
-		{
-			title: "Título do nível 2",
-			image: "https://http.cat/412.jpg",
-			text: "Descrição do nível 2",
-			minValue: 50
-		}
-	]
+    title: titulo,
+    image: urlImagem,
+    questions: [
+        {
+            title: "Título da pergunta 1",
+            color: "#123456",
+            answers: [
+                {
+                    text: "Texto da resposta 1",
+                    image: "https://http.cat/411.jpg",
+                    isCorrectAnswer: true
+                },
+                {
+                    text: "Texto da resposta 2",
+                    image: "https://http.cat/412.jpg",
+                    isCorrectAnswer: false
+                }
+            ]
+        },
+        {
+            title: "Título da pergunta 2",
+            color: "#123456",
+            answers: [
+                {
+                    text: "Texto da resposta 1",
+                    image: "https://http.cat/411.jpg",
+                    isCorrectAnswer: true
+                },
+                {
+                    text: "Texto da resposta 2",
+                    image: "https://http.cat/412.jpg",
+                    isCorrectAnswer: false
+                }
+            ]
+        },
+        {
+            title: "Título da pergunta 3",
+            color: "#123456",
+            answers: [
+                {
+                    text: "Texto da resposta 1",
+                    image: "https://http.cat/411.jpg",
+                    isCorrectAnswer: true
+                },
+                {
+                    text: "Texto da resposta 2",
+                    image: "https://http.cat/412.jpg",
+                    isCorrectAnswer: false
+                }
+            ]
+        }
+    ],
+    levels: [
+        {
+            title: "Título do nível 1",
+            image: "https://http.cat/411.jpg",
+            text: "Descrição do nível 1",
+            minValue: 0
+        },
+        {
+            title: "Título do nível 2",
+            image: "https://http.cat/412.jpg",
+            text: "Descrição do nível 2",
+            minValue: 50
+        }
+    ]
 }
 
 const API = 'https://mock-api.driven.com.br/api/v4/buzzquizz/';
 const formInfo = document.querySelector("form[name='infoBasica']");
 const submit = formInfo.querySelector(".info-basica .botao");
 const formPerguntas = document.querySelector("form[name='formPerguntas']");
-const submitPerguntas = formPerguntas.querySelector(".info-basica .botao");
+const formNiveis = document.querySelector("form[name='formNiveis']");
+const submitNiveis = formNiveis.querySelector(".info-basica .botao");
 
 let validacao = new Validacao();
 
@@ -221,95 +235,121 @@ submit.addEventListener('click', function (event) {
 
     let validado = formInfo.querySelectorAll(".error-validation").length;
 
-    if(validado === 0){
+    if (validado === 0) {
         pegarInformacoesBasicas();
     }
 }); 
 
-submitPerguntas.addEventListener('click', function (event) {
+submitNiveis.addEventListener('click', function (event) {
     event.preventDefault();
-    validacao.validar(formPerguntas);
+    validacao.validar(formNiveis);
 
-    let validado = formPerguntas.querySelectorAll(".error-validation").length;
+    let validado = formNiveis.querySelectorAll(".error-validation").length;
 
-    if(validado === 0){
-        console.log(formPerguntas)
+    if (validado === 0) {
+        console.log(formNiveis)
     }
 });
 
 function pegarInformacoesBasicas() {
 
-        titulo = document.infoBasica.titulo;
-        urlImagem = document.infoBasica.urlImagem;
-        qtdPerguntas = document.infoBasica.qtdPerguntas.value;
-        qtdNiveis = document.infoBasica.qtdNiveis.value;
+    titulo = document.infoBasica.titulo;
+    urlImagem = document.infoBasica.urlImagem;
+    qtdPerguntas = document.infoBasica.qtdPerguntas.value;
+    qtdNiveis = document.infoBasica.qtdNiveis.value;
 
-        formInfo.classList.add("esconder");
-        formPerguntas.classList.remove("esconder");
+    formInfo.classList.add("esconder");
+    formPerguntas.classList.remove("esconder");
 
-        renderizarPerguntas();
+    renderizarPerguntas();
 
 }
 
-function renderizarPerguntas(){
-    let secao = document.querySelector(".criar-quizz");
+function pegarPerguntas() {
+    formPerguntas.classList.add("esconder");
+    formNiveis.classList.remove("esconder");
+}
 
-    for(let i=1; i<=qtdPerguntas.length; i++){
-        secao.innerHTML += `<form class="info-basica perguntas" name="formPerguntas">
-        <h2><strong>Crie suas perguntas</strong></h2>
-        <div class="input">
-            <h3>Pergunta ${i}</h3>
-            <div class="campo">
-                <input type="text" placeholder="Texto da pergunta" class="textoP${i}" minlength="20" required>
-            </div>
-            <div class="campo">
-                <input type="text" placeholder="Cor de fundo da pergunta" class="corP${i}" hexvalidate required>
-            </div>
-            <h3>Resposta correta</h3>
-            <div class="campo">
-                <input type="text" placeholder="Resposta correta" class="corretaP${i}" required>
-            </div>
-            <div class="campo">
-                <input type="url" placeholder="URL da imagem" class="corretaURL-P${i}" urlvalidate required>
-            </div>
-            <h3>Respostas incorretas</h3>
-            <div class="incorreta">
-                <div class="campo">
-                    <input type="text" placeholder="Resposta incorreta ${i}" class="incorretaP${i}-1" required>
-                </div>
-                <div class="campo">
-                    <input type="url" placeholder="URL da imagem ${i}" class="incorretaP${i}-1URL" urlvalidate required>
-                </div>
-            </div>
-            <div class="incorreta">
-                <div class="campo">
-                    <input type="text" placeholder="Resposta incorreta 2" class="incorretaP${i}-2">
-                </div>
-                <div class="campo">
-                    <input type="url" placeholder="URL da imagem 2" class="incorretaP${i}-2URL">
-                </div>
-            </div>
-            <div class="incorreta">
-                <div class="campo">
-                    <input type="text" placeholder="Resposta incorreta 3" class="incorretaP${i}-3">
-                </div>
-                <div class="campo">
-                    <input type="url" placeholder="URL da imagem 3" class="incorretaP${i}-3URL">
-                </div>
-            </div>
-        </div>
-        <input class="botao" type="submit" value="Prosseguir pra criar níveis">
-    </form>`
+function renderizarPerguntas() {
+    let secao = formPerguntas;
+
+    for (let i = 1; i < qtdPerguntas; i++) {
+        secao.innerHTML += `<div class="input">
+                                <div class="titulo-pergunta">
+                                    <h3>Pergunta ${i + 1}</h3>
+                                    <img src="assets/Vector.png" onclick="abrirPergunta(this);">
+                                </div>
+                                <div class="question esconder">
+                                    <div class="campo">
+                                        <input type="text" placeholder="Texto da pergunta" class="textP${i + 1}" minlength="20" required>
+                                    </div>
+                                    <div class="campo">
+                                        <input type="text" placeholder="Cor de fundo da pergunta" class="corP${i + 1}" hexvalidate required>
+                                    </div>
+                                    <h3>Resposta correta</h3>
+                                    <div class="campo">
+                                        <input type="text" placeholder="Resposta correta" class="corretaP${i + 1}" required>
+                                    </div>
+                                    <div class="campo">
+                                        <input type="url" placeholder="URL da imagem" class="corretaURL-P${i + 1}" urlvalidate required>
+                                    </div>
+                                    <h3>Respostas incorretas</h3>
+                                    <div class="incorreta">
+                                        <div class="campo">
+                                            <input type="text" placeholder="Resposta incorreta 1" class="incorretaP${i + 1}-1" required>
+                                        </div>
+                                        <div class="campo">
+                                            <input type="url" placeholder="URL da imagem 1" class="incorretaP${i + 1}-1URL" urlvalidate
+                                                required>
+                                        </div>
+                                    </div>
+                                    <div class="incorreta">
+                                        <div class="campo">
+                                            <input type="text" placeholder="Resposta incorreta 2" class="incorretaP${i + 1}-2">
+                                        </div>
+                                        <div class="campo">
+                                            <input type="url" placeholder="URL da imagem 2" class="incorretaP${i + 1}-2URL">
+                                        </div>
+                                    </div>
+                                    <div class="incorreta">
+                                        <div class="campo">
+                                            <input type="text" placeholder="Resposta incorreta 3" class="incorretaP${i + 1}-3">
+                                        </div>
+                                        <div class="campo">
+                                            <input type="url" placeholder="URL da imagem 3" class="incorretaP${i + 1}-3URL">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`
     }
+    secao.innerHTML += `<input class="botao" type="submit" value="Prosseguir pra criar níveis">`;
+    let submitPerguntas = formPerguntas.querySelector(".info-basica .botao");
+
+    submitPerguntas.addEventListener('click', function (event) {
+        event.preventDefault();
+        validacao.validar(formPerguntas);
+    
+        let validado = formPerguntas.querySelectorAll(".error-validation").length;
+    
+        if (validado === 0) {
+            pegarPerguntas();
+        }
+    });
 }
 
-function pegarPerguntas(){
-    for(let i=1; i<=qtdPerguntas.length; i++){
-        perguntas.questions.title = formPerguntas.querySelector(`textoP${i}`).value;
-        perguntas.questions.color = formPerguntas.querySelector(`corP${i}`).value;
-    }
+function abrirLVL(lvl) {
+    const div = lvl.parentNode;
+    const pai = div.parentNode;
+    const nivel = pai.querySelector(".nivel");
+    nivel.classList.toggle("esconder");
 }
 
+function abrirPergunta(pergunta) {
+    const div = pergunta.parentNode;
+    const pai = div.parentNode;
+    const question = pai.querySelector(".question");
+    question.classList.toggle("esconder");
+}
 
 
 /* Funções que estou utilizando */
@@ -347,8 +387,8 @@ let respostas
 function renderizarposts1(response) {
     const posts = response.data
     console.log(posts)
-    const pagina_quizz=document.querySelector(".pagina_quizz.esconder")
-    const quiz_conteudo=document.querySelector(".quiz_conteudo")
+    const pagina_quizz = document.querySelector(".pagina_quizz.esconder")
+    const quiz_conteudo = document.querySelector(".quiz_conteudo")
     const quiztopo = document.querySelector(".quiz_topo.esconder")
     pagina_quizz.classList.remove("esconder")
     quiztopo.classList.remove("esconder")

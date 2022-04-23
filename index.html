@@ -42,17 +42,26 @@
         </section>
         <!-- HTML que estou utilizando -->
 
-        <section class="criar-quizz">
-            <form class="info-basica" name="infoBasica" onsubmit="pegarInformacoesBasicas(this.form)">
+        <section class="criar-quizz esconder">
+            <form class="info-basica" name="infoBasica">
                 <h2><strong>Comece pelo começo</strong></h2>
                 <div class="input">
-                    <input class="titulo" name="titulo" type="text" placeholder="Título do seu quizz" minlength="2"
-                        maxlength="6">
-                    <input class="url-imagem" name="urlImagem" type="url" placeholder="URL da imagem do seu quizz">
-                    <input class="qtd-perguntas" name="qtdPerguntas" type="number"
-                        placeholder="Quantidade de perguntas do quizz" min="3">
-                    <input class="qtd-niveis" name="qtdNiveis" type="number" placeholder="Quantidade de níveis do quizz"
-                        min="2">
+                    <div class="campo">
+                        <input class="titulo" name="titulo" type="text" placeholder="Título do seu quizz" minlength="20"
+                            maxlength="65" required>
+                    </div>
+                    <div class="campo">
+                        <input class="url-imagem" name="urlImagem" type="url" placeholder="URL da imagem do seu quizz"
+                            urlvalidate required>
+                    </div>
+                    <div class="campo">
+                        <input class="qtd-perguntas" name="qtdPerguntas" type="number"
+                            placeholder="Quantidade de perguntas do quizz" minquantidade="3" required>
+                    </div>
+                    <div class="campo">
+                        <input class="qtd-niveis" name="qtdNiveis" type="number"
+                            placeholder="Quantidade de níveis do quizz" minquantidade="2" required>
+                    </div>
                 </div>
                 <input class="botao" type="submit" value="Prosseguir pra criar perguntas">
             </form>
@@ -101,7 +110,72 @@
                         </div>
                     </div>
                 </div>
-                <input class="botao" type="submit" value="Prosseguir pra criar níveis">
+            </form>
+
+            <form class="info-basica niveis esconder" name="formNiveis">
+                <h2>Agora, decida os niveis</h2>
+                <div class="input">
+                    <h3>Nível 1</h3>
+                    <div class="campo">
+                        <input type="text" placeholder="Título do nível" class="lvlTitle1" minlength="10">
+                    </div>
+                    <div class="campo">
+                        <input type="number" placeholder="% de acerto mínima" class="porcentagem" minquantidade="0"
+                            maxquantidade="100">
+                    </div>
+                    <div class="campo">
+                        <input type="url" placeholder="URL da imagem do nível" class="URLlvl1" urlvalidate>
+                    </div>
+                    <div class="campo">
+                        <input name="descricao" placeholder="Descrição do nível" minlength="30"
+                            class="descricao descLVL1"></input>
+                    </div>
+                </div>
+                <div class="input">
+                    <div class="titulo-pergunta">
+                        <h3 style="margin:0">Nível 2</h3>
+                        <img src="assets/Vector.png" onclick="abrirLVL(this);">
+                    </div>
+                    <div class="nivel esconder">
+                        <div class="campo">
+                            <input type="text" placeholder="Título do nível" class="lvlTitle2" minlength="10">
+                        </div>
+                        <div class="campo">
+                            <input type="number" placeholder="% de acerto mínima" class="porcentagem" minquantidade="0"
+                                maxquantidade="100">
+                        </div>
+                        <div class="campo">
+                            <input type="url" placeholder="URL da imagem do nível" class="URLlvl2" urlvalidate>
+                        </div>
+                        <div class="campo">
+                            <input name="descricao" placeholder="Descrição do nível" minlength="30"
+                                class="descricao descLVL2"></input>
+                        </div>
+                    </div>
+                </div>
+                <div class="input">
+                    <div class="titulo-pergunta">
+                        <h3 style="margin: 0;">Nível 3</h3>
+                        <img src="assets/Vector.png" onclick="abrirLVL(this);">
+                    </div>
+                    <div class="nivel esconder">
+                        <div class="campo">
+                            <input type="text" placeholder="Título do nível" class="lvlTitle3" minlength="10">
+                        </div>
+                        <div class="campo">
+                            <input type="number" placeholder="% de acerto mínima" class="porcentagem" minquantidade="0"
+                                maxquantidade="100">
+                        </div>
+                        <div class="campo">
+                            <input type="url" placeholder="URL da imagem do nível" class="URLlvl3" urlvalidate>
+                        </div>
+                        <div class="campo">
+                            <input name="descricao" placeholder="Descrição do nível" minlength="30"
+                                class="descricao descLVL3"></input>
+                        </div>
+                    </div>
+                </div>
+                <input class="botao" type="submit" value="Finalizar Quizz">
             </form>
         </section>
         <p class="error-validation template"></p>

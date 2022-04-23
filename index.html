@@ -37,13 +37,13 @@
             </div>
         </section>
         <section class="pagina_quizz esconder">
-        <div class="quiz_conteudo">
-    
-        </div>
+            <div class="quiz_conteudo">
+
+            </div>
         </section>
         <!-- HTML que estou utilizando -->
 
-        <section class="criar-quizz">
+        <section class="criar-quizz esconder">
             <form class="info-basica" name="infoBasica">
                 <h2><strong>Comece pelo começo</strong></h2>
                 <div class="input">
@@ -90,7 +90,8 @@
                             <input type="text" placeholder="Resposta incorreta 1" class="incorretaP1-1" required>
                         </div>
                         <div class="campo">
-                            <input type="url" placeholder="URL da imagem 1" class="incorretaP1-1URL" urlvalidate required>
+                            <input type="url" placeholder="URL da imagem 1" class="incorretaP1-1URL" urlvalidate
+                                required>
                         </div>
                     </div>
                     <div class="incorreta">
@@ -110,43 +111,72 @@
                         </div>
                     </div>
                 </div>
-                <input class="botao" type="submit" value="Prosseguir pra criar níveis">
             </form>
 
-            <form class="info-basica niveis esconder">
+            <form class="info-basica niveis esconder" name="formNiveis">
                 <h2>Agora, decida os niveis</h2>
                 <div class="input">
                     <h3>Nível 1</h3>
-                    <input type="text" placeholder="Título do nível" class="lvlTitle1">
-                    <input type="text" placeholder="% de acerto mínima" class="acerto1">
-                    <input type="url" placeholder="URL da imagem do nível" class="URLlvl1">
-                    <textarea name="descricao" id="" cols="30" rows="10" placeholder="Descrição do nível" class="descLVL1"></textarea>
+                    <div class="campo">
+                        <input type="text" placeholder="Título do nível" class="lvlTitle1" minlength="10">
+                    </div>
+                    <div class="campo">
+                        <input type="number" placeholder="% de acerto mínima" class="porcentagem"
+                            minquantidade="0" maxquantidade="100">
+                    </div>
+                    <div class="campo">
+                        <input type="url" placeholder="URL da imagem do nível" class="URLlvl1" urlvalidate>
+                    </div>
+                    <div class="campo">
+                        <input name="descricao" placeholder="Descrição do nível" minlength="30"
+                            class="descricao descLVL1"></input>
+                    </div>
                 </div>
                 <div class="input">
-                    <div class="titulo-pergunta">   
+                    <div class="titulo-pergunta">
                         <h3 style="margin:0">Nível 2</h3>
-                        <img src="./assets/Vector (1).png" onclick="abrirLVL(this);">
+                        <img src="assets/Vector.png" onclick="abrirLVL(this);">
                     </div>
-                    <div class="level hide">
-                        <input type="text" placeholder="Título do nível" class="lvlTitle2">
-                        <input type="text" placeholder="% de acerto mínima" class="acerto2">
-                        <input type="url" placeholder="URL da imagem do nível" class="URLlvl2">
-                        <textarea name="descricao" id="" cols="30" rows="10" placeholder="Descrição do nível" class="descLVL2"></textarea>
+                    <div class="nivel esconder">
+                        <div class="campo">
+                            <input type="text" placeholder="Título do nível" class="lvlTitle2" minlength="10">
+                        </div>
+                        <div class="campo">
+                            <input type="number" placeholder="% de acerto mínima" class="porcentagem"
+                                minquantidade="0" maxquantidade="100">
+                        </div>
+                        <div class="campo">
+                            <input type="url" placeholder="URL da imagem do nível" class="URLlvl2" urlvalidate>
+                        </div>
+                        <div class="campo">
+                            <input name="descricao" placeholder="Descrição do nível" minlength="30"
+                                class="descricao descLVL2"></input>
+                        </div>
                     </div>
                 </div>
                 <div class="input">
                     <div class="titulo-pergunta">
                         <h3 style="margin: 0;">Nível 3</h3>
-                        <img src="./assets/Vector (1).png" onclick="abrirLVL(this);">
+                        <img src="assets/Vector.png" onclick="abrirLVL(this);">
                     </div>
-                    <div class="level hide">
-                        <input type="text" placeholder="Título do nível" class="lvlTitle3">
-                        <input type="text" placeholder="% de acerto mínima" class="acerto3">
-                        <input type="url" placeholder="URL da imagem do nível" class="URLlvl3">
-                        <textarea name="descricao" id="" cols="30" rows="10" placeholder="Descrição do nível" class="descLVL3"></textarea>
+                    <div class="nivel esconder">
+                        <div class="campo">
+                            <input type="text" placeholder="Título do nível" class="lvlTitle3" minlength="10">
+                        </div>
+                        <div class="campo">
+                            <input type="number" placeholder="% de acerto mínima" class="porcentagem"
+                                minquantidade="0" maxquantidade="100">
+                        </div>
+                        <div class="campo">
+                            <input type="url" placeholder="URL da imagem do nível" class="URLlvl3" urlvalidate>
+                        </div>
+                        <div class="campo">
+                            <input name="descricao" placeholder="Descrição do nível" minlength="30"
+                                class="descricao descLVL3"></input>
+                        </div>
                     </div>
                 </div>
-                <button onclick="finalizarQuizz()">Finalizar Quizz</button>
+                <input class="botao" type="submit" value="Finalizar Quizz">
             </form>
         </section>
         <p class="error-validation template"></p>

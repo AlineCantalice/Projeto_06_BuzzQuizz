@@ -207,7 +207,7 @@ let perguntas = {
 	]
 }
 
-const API = 'https://mock-api.driven.com.br/api/v6/buzzquizz/';
+const API = 'https://mock-api.driven.com.br/api/v4/buzzquizz/';
 const formInfo = document.querySelector("form[name='infoBasica']");
 const submit = formInfo.querySelector(".info-basica .botao");
 const formPerguntas = document.querySelector("form[name='formPerguntas']");
@@ -331,7 +331,7 @@ function renderizarposts(response) {
 }
 function pegarpost(clicked_id) {
     document.querySelector(".posts").classList.add("esconder")
-
+    // const promisse = axios.get(`${API}quizzes/84`)
     const promisse = axios.get(`${API}quizzes/${clicked_id}`)
     promisse.then(renderizarposts1)
     promisse.catch(atualizar)
@@ -343,6 +343,7 @@ function criandoquizz() {
     document.querySelector(".posts").style.display = "none"
     document.querySelector(".criar-quizz").style.display = "inherit"
 }
+let respostas
 function renderizarposts1(response) {
     const posts = response.data
     console.log(posts)
@@ -358,18 +359,31 @@ function renderizarposts1(response) {
              ${posts.questions[i].title} 
         </div>
         <div class="container_respostas"> </div>
-        </div>`
+        </div>`  
     }
     const containerrespostas = document.querySelectorAll(".container_respostas")
     for (let i = 0; i < containerrespostas.length; i++) {
-        console.log(posts.questions[i].answers)
+        respostas=posts.questions[i].answers
+        respostas=randomize()
         for (let j = 0; j < posts.questions[i].answers.length; j++) {
             containerrespostas[i].innerHTML += `<div class="resposta">
-        <img class="imagens_resposta" src="${posts.questions[i].answers[j].image}" alt="">
-        <p> ${posts.questions[i].answers[j].text} </p>
+        <img class="imagens_resposta" src="${respostas[j].image}" alt="">
+        <p> ${respostas[j].text} </p>
         </div>`
         }
     }
 }
+ const randomize = () => {
+    let respostas_aleatorias = []
+     for (let i=0;i<respostas.length;i++) {
+         respostas_aleatorias[i]=  respostas[i]
+     }
+          for (let i = 0; i < (respostas_aleatorias.length); i++) {
+        let x = respostas_aleatorias[i];
+        let y = Math.floor(Math.random() * (i + 1));
+        respostas_aleatorias[i] = respostas_aleatorias[y];
+        respostas_aleatorias[y] = x;
+    }
+    return respostas_aleatorias
+ }
 /* Funções que estou utilizando */
-

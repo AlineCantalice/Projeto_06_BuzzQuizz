@@ -224,7 +224,7 @@ submit.addEventListener('click', function (event) {
     if(validado === 0){
         pegarInformacoesBasicas();
     }
-});
+}); 
 
 submitPerguntas.addEventListener('click', function (event) {
     event.preventDefault();
@@ -366,7 +366,7 @@ function renderizarposts1(response) {
         respostas=posts.questions[i].answers
         respostas=randomize()
         for (let j = 0; j < posts.questions[i].answers.length; j++) {
-            containerrespostas[i].innerHTML += `<div class="resposta">
+            containerrespostas[i].innerHTML += `<div class="resposta" id="${respostas[j].isCorrectAnswer}"onclick="checarResposta(this)">
         <img class="imagens_resposta" src="${respostas[j].image}" alt="">
         <p> ${respostas[j].text} </p>
         </div>`
@@ -386,4 +386,48 @@ function renderizarposts1(response) {
     }
     return respostas_aleatorias
  }
+ let texto
+ let contador
+ let container
+ function checarResposta(clicked){
+     if(clicked.parentNode.querySelectorAll(".errada").length>1){
+         return ;
+     }
+     else{
+            if (clicked.id === "true"){
+                container = clicked.parentNode.querySelectorAll('[id=false]');
+                for (let i=0;i<container.length;i++){
+                    container[i].classList.add("opacidade")
+                    texto = container[i].querySelector("p")
+                    texto.classList.add("errada")
+                }
+                texto= clicked.querySelector("p")
+                texto.classList.add("certa")
+                contador ++
+                setTimeout(scrolle,2000)
+            } else{
+                contador ++
+                container = clicked.parentNode.querySelectorAll(".resposta");
+                for (let i=0;i<container.length;i++){
+                    container[i].classList.add("opacidade")
+                    texto = container[i].querySelector("p")
+                    texto.classList.add("errada")
+                }   
+                texto= clicked.parentNode.querySelector('[id=true]')
+                console.log(texto)
+                texto.querySelector("p").classList.remove("errada")
+                texto.querySelector("p").classList.add("certa")
+                clicked.classList.remove("opacidade")
+                setTimeout(scrolle1,2000)
+            }
+    }
+
+    }
+
+ function scrolle() {
+    document.querySelectorAll(".container_respostas")[1].scrollIntoView();
+}
+function scrolle1() {
+    document.querySelectorAll(".container_respostas")[2].scrollIntoView();
+}
 /* Funções que estou utilizando */

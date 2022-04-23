@@ -73,6 +73,28 @@ strong {
     object-fit: cover;
     object-position: 50% 50%;
 }
+.certa{
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 23px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #009C22;
+}
+.errada{
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 23px;
+    letter-spacing: 0em;
+    text-align: left;
+    color:#FF4B4B;
+
+}
+.opacidade{
+    opacity: 0.3;
+}
 
 .quiz_conteudo {
     margin-top: 69.61px;

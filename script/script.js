@@ -7,7 +7,8 @@ class Validacao {
             'urlvalidate',
             'hexvalidate',
             'minquantidade',
-            'maxquantidade'
+            'minvalue',
+            'maxvalue'
         ]
     }
 
@@ -68,14 +69,12 @@ class Validacao {
     }
 
     urlvalidate(input) {
-        const expressaoValidaUrl =
-            /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
 
-        let email = input.value;
+        let urlImagem = input.value;
 
-        let mensagemErro = "Insira uma URL válida!";
+        let mensagemErro = "Insira uma URL de imagem válida!";
 
-        if (!expressaoValidaUrl.test(email)) {
+        if (urlImagem.match(/^http[^\?]*.(jpg|jpeg|gif|png|tiff|bmp)(\?(.*))?$/gmi) === null) {
             this.printMensagem(input, mensagemErro);
         }
     }
@@ -105,8 +104,21 @@ class Validacao {
         if (classeInput.value === "qtd-niveis") {
             mensagemErro = `Precisa preencher o campo com pelo menos ${minvalue} níveis`;
         }
-        if (classeInput.value === 'acerto1' || classeInput.value === 'acerto2' || classeInput.value === 'acerto3') {
-            mensagemErro = `Precisa preencher o campo com um valor entre 0 e 100%`;
+
+        if (inputvalue < minvalue) {
+            this.printMensagem(input, mensagemErro);
+        }
+    }
+
+    minvalue(input, minvalue){
+        let inputvalue = input.value;
+
+        let classeInput = input.classList;
+
+        let mensagemErro = `O valor minimo é ${minvalue}%`;
+
+        if((classeInput.value === "acerto1" || classeInput.value === "acerto2" || classeInput.value === "acerto3") && inputvalue !== 0){
+            mensagemErro = `Pelo menos um dos campos precisa ter porcentagem ${minvalue}%`;
         }
 
         if (inputvalue < minvalue) {
@@ -114,10 +126,10 @@ class Validacao {
         }
     }
 
-    maxquantidade(input, maxvalue) {
+    maxvalue(input, maxvalue) {
         let inputvalue = input.value;
 
-        let mensagemErro = `Precisa preencher o campo com um valor entre 0 e 100%`;
+        let mensagemErro = `O valor maximo é ${maxvalue}%`;
 
         if (inputvalue > maxvalue) {
             this.printMensagem(input, mensagemErro);
@@ -145,6 +157,7 @@ class Validacao {
     }
 }
 
+let quizz = {};
 let titulo;
 let urlImagem;
 let qtdPerguntas;
@@ -214,8 +227,8 @@ submitNiveis.addEventListener('click', function (event) {
 
 function pegarInformacoesBasicas() {
 
-    titulo = document.infoBasica.titulo;
-    urlImagem = document.infoBasica.urlImagem;
+    titulo = document.infoBasica.titulo.value;
+    urlImagem = document.infoBasica.urlImagem.value;
     qtdPerguntas = document.infoBasica.qtdPerguntas.value;
     qtdNiveis = document.infoBasica.qtdNiveis.value;
 
@@ -265,9 +278,6 @@ function pegarNiveis() {
     desc2 = document.querySelector(".descLVL2").value;
 
     finalizarQuizz();
-
-    formNiveis.classList.add("esconder");
-    telaSucesso.classList.remove("esconder");
 }
 
 function renderizarPerguntas() {
@@ -339,7 +349,7 @@ function renderizarPerguntas() {
 
 function finalizarQuizz() {
 
-    let perguntas = {
+    quizz = {
         title: titulo,
         image: urlImagem,
         questions: [
@@ -408,12 +418,45 @@ function finalizarQuizz() {
         ]
     }
 
-    const promisse = axios.post(`${API}quizzes`, perguntas);
+    const promisse = axios.post(`${API}quizzes`, quizz);
     promisse.then(enviarQuizz);
 }
 
-function enviarQuizz(promise) {
-    console.log(promise.data);
+function enviarQuizz(response) {
+    console.log(response.data);
+    formNiveis.classList.add("esconder");
+    telaSucesso.classList.remove("esconder");
+    telaSucesso.innerHTML = "";
+    telaSucesso.innerHTML += `<h2>Seu quizz está pronto!</h2>
+    <div class="card2">
+        <img src="${urlImagem}">
+        <div class="titulo">
+            <span>${titulo}</span>
+        </div>
+    </div>
+    <input class="botao" type="submit" value="Acessar quizz">
+    <a href="" onclick="atualizar();">Voltar para home</a>`
+    let quizz_usuario = quizz.data;
+    const localQuizz = localStorage.getItem("quizz");
+    if (localQuizz !== null) {
+        let arrayQuizz = JSON.parse(localQuizz);
+        arrayQuizz.push(quizz_usuario);
+        let arrayString = JSON.stringify(arrayQuizz);
+        localStorage.setItem("quizz", arrayString);
+    }
+    else {
+        let arrayQuizz = [quizz_usuario];
+        let arrayString = JSON.stringify(arrayQuizz);
+        localStorage.setItem("quizz", arrayString);
+    }
+
+    let submitSucesso = telaSucesso.querySelector(".botao");
+
+    submitSucesso.addEventListener('click', function(){
+        telaSucesso.classList.add("esconder");
+        pegarpost(response.data.id);
+    })
+
 }
 
 function abrirLVL(lvl) {
@@ -459,8 +502,8 @@ function atualizar() {
     window.location.reload()
 }
 function criandoquizz() {
-    document.querySelector(".posts").classList.add("esconder")
-    document.querySelector(".criar-quizz").classList.remove("esconder")
+    document.querySelector(".posts").classList.add("esconder");
+    infoBasica.classList.remove("esconder");
 }
 let respostas
 let posts

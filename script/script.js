@@ -180,7 +180,7 @@ let acerto2;
 let url2;
 let desc2;
 
-const API = 'https://mock-api.driven.com.br/api/v4/buzzquizz/';
+const API = 'https://mock-api.driven.com.br/api/v6/buzzquizz/';
 const formInfo = document.querySelector("form[name='infoBasica']");
 const submit = formInfo.querySelector(".info-basica .botao");
 const formPerguntas = document.querySelector("form[name='formPerguntas']");
@@ -526,7 +526,7 @@ function checarResposta(clicked) {
             texto.classList.add("certa")
             respostacerta ++
             contador++
-            setTimeout(scrolle, 2000)
+            // setTimeout(scrolle, 2000)
         } else {
             contador++
             container = clicked.parentNode.querySelectorAll(".resposta");
@@ -540,13 +540,10 @@ function checarResposta(clicked) {
             texto.querySelector("p").classList.remove("errada")
             texto.querySelector("p").classList.add("certa")
             clicked.classList.remove("opacidade")
-            setTimeout(scrolle1, 2000)
+            // setTimeout(scrolle1, 2000)
         }
     }
     const qntd_perguntas=document.querySelectorAll(".container_pergunta")
-    alert(respostacerta)
-    alert(contador)
-    alert(qntd_perguntas.length)
     if (contador==qntd_perguntas.length){
         criarResultado()
 
@@ -554,23 +551,28 @@ function checarResposta(clicked) {
 
 }
 
-function scrolle() {
-    document.querySelectorAll(".container_respostas")[1].scrollIntoView();
-}
-function scrolle1() {
-    document.querySelectorAll(".container_respostas")[2].scrollIntoView();
-}
+// function scrolle() {
+//     document.querySelectorAll(".container_respostas")[1].scrollIntoView();
+// }
+// function scrolle1() {
+//     document.querySelectorAll(".container_respostas")[2].scrollIntoView();
+// }
  function criarResultado (){
     let acerto =(Number(respostacerta/posts.questions.length)*100).toFixed(0)
     let valorMin
     let levels= posts.levels.length
     quiz_conteudo.innerHTML +=
-    `<div class="container_final">
-    </div>`  
+    `<div class="container_final"></div>
+    <button class="reiniciar" onclick="reiniciar()" >
+    Reiniciar Quiz
+    </button>
+    <p class="voltar_home" onclick="voltarParaHome()">
+    Voltar para home
+    </p>`  
     const container_final= document.querySelector(".container_final")
     for (let i =0; i<levels;i++){
         valorMin=posts.levels[i].minValue
-        if(acerto>valorMin) {
+        if(acerto>=valorMin) {
         container_final.innerHTML=`
         <div>
             <div class="pergunta1"> 
@@ -578,7 +580,7 @@ function scrolle1() {
             </div>
             <div class="container_final_imagens"> 
                     <div class="esquerda"> 
-                        <img class="stewart" src="${posts.levels[i].image}" alt="">
+                        <img class="imagem_resultado" src="${posts.levels[i].image}" alt="">
                     </div>
                     <div class="direita"> 
                     ${posts.levels[i].text}
@@ -588,4 +590,28 @@ function scrolle1() {
         `
     }
  }
+}
+function reiniciar () {
+    const certas= document.querySelectorAll(".certa")
+    for(i=0;i<certas.length;i++){
+        certas[i].classList.remove("certa")
+    }
+    const erradas= document.querySelectorAll(".errada")
+    for(i=0;i<erradas.length;i++){
+        erradas[i].classList.remove("errada")
+    }
+    const opacos=document.querySelectorAll(".opacidade")
+    for(i=0;i<opacos.length;i++){
+        opacos[i].classList.remove("opacidade")
+    }
+    document.querySelector(".container_final").remove()
+    document.querySelector(".reiniciar").remove()
+    document.querySelector(".voltar_home").remove()
+    contador=0
+    respostacerta=0
+    document.documentElement.scrollTop = 0
+}
+function voltarParaHome (){
+    document.location.reload()
+    document.documentElement.scrollTop = 0
 }

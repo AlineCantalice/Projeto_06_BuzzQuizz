@@ -506,11 +506,12 @@ function criandoquizz() {
     infoBasica.classList.remove("esconder");
 }
 let respostas
+let posts
+const quiz_conteudo = document.querySelector(".quiz_conteudo")
 function renderizarposts1(response) {
-    const posts = response.data
+    posts = response.data
     console.log(posts)
     const pagina_quizz = document.querySelector(".pagina_quizz.esconder")
-    const quiz_conteudo = document.querySelector(".quiz_conteudo")
     const quiztopo = document.querySelector(".quiz_topo.esconder")
     pagina_quizz.classList.remove("esconder")
     quiztopo.classList.remove("esconder")
@@ -547,10 +548,11 @@ const randomize = () => {
         respostas_aleatorias[y] = x;
     }
     return respostas_aleatorias
-}
-let texto
-let contador
-let container
+ }
+ let texto
+ let contador=0
+ let container
+ let respostacerta=0
 function checarResposta(clicked) {
     if (clicked.parentNode.querySelectorAll(".errada").length > 1) {
         return;
@@ -565,8 +567,9 @@ function checarResposta(clicked) {
             }
             texto = clicked.querySelector("p")
             texto.classList.add("certa")
+            respostacerta ++
             contador++
-            setTimeout(scrolle, 2000)
+            // setTimeout(scrolle, 2000)
         } else {
             contador++
             container = clicked.parentNode.querySelectorAll(".resposta");
@@ -580,16 +583,78 @@ function checarResposta(clicked) {
             texto.querySelector("p").classList.remove("errada")
             texto.querySelector("p").classList.add("certa")
             clicked.classList.remove("opacidade")
-            setTimeout(scrolle1, 2000)
+            // setTimeout(scrolle1, 2000)
         }
+    }
+    const qntd_perguntas=document.querySelectorAll(".container_pergunta")
+    if (contador==qntd_perguntas.length){
+        criarResultado()
+
     }
 
 }
 
-function scrolle() {
-    document.querySelectorAll(".container_respostas")[1].scrollIntoView();
+// function scrolle() {
+//     document.querySelectorAll(".container_respostas")[1].scrollIntoView();
+// }
+// function scrolle1() {
+//     document.querySelectorAll(".container_respostas")[2].scrollIntoView();
+// }
+ function criarResultado (){
+    let acerto =(Number(respostacerta/posts.questions.length)*100).toFixed(0)
+    let valorMin
+    let levels= posts.levels.length
+    quiz_conteudo.innerHTML +=
+    `<div class="container_final"></div>
+    <button class="reiniciar" onclick="reiniciar()" >
+    Reiniciar Quiz
+    </button>
+    <p class="voltar_home" onclick="voltarParaHome()">
+    Voltar para home
+    </p>`  
+    const container_final= document.querySelector(".container_final")
+    for (let i =0; i<levels;i++){
+        valorMin=posts.levels[i].minValue
+        if(acerto>=valorMin) {
+        container_final.innerHTML=`
+        <div>
+            <div class="pergunta1"> 
+            ${acerto}% de acerto:  ${posts.levels[i].title} 
+            </div>
+            <div class="container_final_imagens"> 
+                    <div class="esquerda"> 
+                        <img class="imagem_resultado" src="${posts.levels[i].image}" alt="">
+                    </div>
+                    <div class="direita"> 
+                    ${posts.levels[i].text}
+                    </div>
+            </div>
+        </div>
+        `
+    }
+ }
 }
-function scrolle1() {
-    document.querySelectorAll(".container_respostas")[2].scrollIntoView();
+function reiniciar () {
+    const certas= document.querySelectorAll(".certa")
+    for(i=0;i<certas.length;i++){
+        certas[i].classList.remove("certa")
+    }
+    const erradas= document.querySelectorAll(".errada")
+    for(i=0;i<erradas.length;i++){
+        erradas[i].classList.remove("errada")
+    }
+    const opacos=document.querySelectorAll(".opacidade")
+    for(i=0;i<opacos.length;i++){
+        opacos[i].classList.remove("opacidade")
+    }
+    document.querySelector(".container_final").remove()
+    document.querySelector(".reiniciar").remove()
+    document.querySelector(".voltar_home").remove()
+    contador=0
+    respostacerta=0
+    document.documentElement.scrollTop = 0
 }
-/* Funções que estou utilizando */
+function voltarParaHome (){
+    document.location.reload()
+    document.documentElement.scrollTop = 0
+}

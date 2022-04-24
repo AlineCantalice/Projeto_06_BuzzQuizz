@@ -380,15 +380,16 @@ function atualizar() {
     window.location.reload()
 }
 function criandoquizz() {
-    document.querySelector(".posts").style.display = "none"
-    document.querySelector(".criar-quizz").style.display = "inherit"
+    document.querySelector(".posts").classList.add("esconder")
+    document.querySelector(".criar-quizz").classList.remove("esconder")
 }
 let respostas
+let posts
+const quiz_conteudo = document.querySelector(".quiz_conteudo")
 function renderizarposts1(response) {
-    const posts = response.data
+    posts = response.data
     console.log(posts)
     const pagina_quizz = document.querySelector(".pagina_quizz.esconder")
-    const quiz_conteudo = document.querySelector(".quiz_conteudo")
     const quiztopo = document.querySelector(".quiz_topo.esconder")
     pagina_quizz.classList.remove("esconder")
     quiztopo.classList.remove("esconder")
@@ -427,8 +428,9 @@ function renderizarposts1(response) {
     return respostas_aleatorias
  }
  let texto
- let contador
+ let contador=0
  let container
+ let respostacerta=0
  function checarResposta(clicked){
      if(clicked.parentNode.querySelectorAll(".errada").length>1){
          return ;
@@ -443,6 +445,7 @@ function renderizarposts1(response) {
                 }
                 texto= clicked.querySelector("p")
                 texto.classList.add("certa")
+                respostacerta ++
                 contador ++
                 setTimeout(scrolle,2000)
             } else{
@@ -461,6 +464,14 @@ function renderizarposts1(response) {
                 setTimeout(scrolle1,2000)
             }
     }
+    const qntd_perguntas=document.querySelectorAll(".container_pergunta")
+    alert(respostacerta)
+    alert(contador)
+    alert(qntd_perguntas.length)
+    if (contador==qntd_perguntas.length){
+        criarResultado()
+
+    }
 
     }
 
@@ -470,4 +481,33 @@ function renderizarposts1(response) {
 function scrolle1() {
     document.querySelectorAll(".container_respostas")[2].scrollIntoView();
 }
+ function criarResultado (){
+    let acerto =(Number(respostacerta/posts.questions.length)*100).toFixed(0)
+    let valorMin
+    let levels= posts.levels.length
+    quiz_conteudo.innerHTML +=
+    `<div class="container_final">
+    </div>`  
+    const container_final= document.querySelector(".container_final")
+    for (let i =0; i<levels;i++){
+        valorMin=posts.levels[i].minValue
+        if(acerto>valorMin)
+        container_final.innerHTML=`
+        <div>
+            <div class="pergunta1"> 
+            ${acerto}% de acerto:  ${posts.levels[i].title} 
+            </div>
+            <div class="container_final_imagens"> 
+                    <div class="esquerda"> 
+                        <img class="stewart" src="${posts.levels[i].image}" alt="">
+                    </div>
+                    <div class="direita"> 
+                    ${posts.levels[i].text}
+                    </div>
+            </div>
+        </div>
+        `
+    }
+    
+ }
 /* Funções que estou utilizando */

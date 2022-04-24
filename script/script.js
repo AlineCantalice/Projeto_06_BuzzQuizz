@@ -105,7 +105,7 @@ class Validacao {
         if (classeInput.value === "qtd-niveis") {
             mensagemErro = `Precisa preencher o campo com pelo menos ${minvalue} níveis`;
         }
-        if (classeInput.value === 'porcentagem') {
+        if (classeInput.value === 'acerto1' || classeInput.value === 'acerto2' || classeInput.value === 'acerto3') {
             mensagemErro = `Precisa preencher o campo com um valor entre 0 e 100%`;
         }
 
@@ -150,82 +150,43 @@ let urlImagem;
 let qtdPerguntas;
 let qtdNiveis;
 
+let textoP1;
+let corfundoP1;
+let corretaP1;
+let urlCorretaP1;
+let incorretaP1_1;
+let incorretaP1_1URL;
 
-let perguntas = {
-    title: titulo,
-    image: urlImagem,
-    questions: [
-        {
-            title: "Título da pergunta 1",
-            color: "#123456",
-            answers: [
-                {
-                    text: "Texto da resposta 1",
-                    image: "https://http.cat/411.jpg",
-                    isCorrectAnswer: true
-                },
-                {
-                    text: "Texto da resposta 2",
-                    image: "https://http.cat/412.jpg",
-                    isCorrectAnswer: false
-                }
-            ]
-        },
-        {
-            title: "Título da pergunta 2",
-            color: "#123456",
-            answers: [
-                {
-                    text: "Texto da resposta 1",
-                    image: "https://http.cat/411.jpg",
-                    isCorrectAnswer: true
-                },
-                {
-                    text: "Texto da resposta 2",
-                    image: "https://http.cat/412.jpg",
-                    isCorrectAnswer: false
-                }
-            ]
-        },
-        {
-            title: "Título da pergunta 3",
-            color: "#123456",
-            answers: [
-                {
-                    text: "Texto da resposta 1",
-                    image: "https://http.cat/411.jpg",
-                    isCorrectAnswer: true
-                },
-                {
-                    text: "Texto da resposta 2",
-                    image: "https://http.cat/412.jpg",
-                    isCorrectAnswer: false
-                }
-            ]
-        }
-    ],
-    levels: [
-        {
-            title: "Título do nível 1",
-            image: "https://http.cat/411.jpg",
-            text: "Descrição do nível 1",
-            minValue: 0
-        },
-        {
-            title: "Título do nível 2",
-            image: "https://http.cat/412.jpg",
-            text: "Descrição do nível 2",
-            minValue: 50
-        }
-    ]
-}
+let textoP2;
+let corfundoP2;
+let corretaP2;
+let urlCorretaP2;
+let incorretaP2_1;
+let incorretaP2_1URL;
 
-const API = 'https://mock-api.driven.com.br/api/v4/buzzquizz/';
+let textoP3;
+let corfundoP3;
+let corretaP3;
+let urlCorretaP3;
+let incorretaP3_1;
+let incorretaP3_1URL;
+
+let tituloLevel1;
+let acerto1;
+let url1;
+let desc1;
+let tituloLevel2;
+let acerto2;
+let url2;
+let desc2;
+
+const API = 'https://mock-api.driven.com.br/api/v6/buzzquizz/';
 const formInfo = document.querySelector("form[name='infoBasica']");
 const submit = formInfo.querySelector(".info-basica .botao");
 const formPerguntas = document.querySelector("form[name='formPerguntas']");
 const formNiveis = document.querySelector("form[name='formNiveis']");
 const submitNiveis = formNiveis.querySelector(".info-basica .botao");
+const telaSucesso = document.querySelector(".sucesso-quizz.sucesso");
 
 let validacao = new Validacao();
 
@@ -233,21 +194,21 @@ submit.addEventListener('click', function (event) {
     event.preventDefault();
     validacao.validar(formInfo);
 
-    let validado = formInfo.querySelectorAll(".error-validation").length;
+    let erroEncontrado = formInfo.querySelectorAll(".error-validation").length;
 
-    if (validado === 0) {
+    if (erroEncontrado === 0) {
         pegarInformacoesBasicas();
     }
-}); 
+});
 
 submitNiveis.addEventListener('click', function (event) {
     event.preventDefault();
     validacao.validar(formNiveis);
 
-    let validado = formNiveis.querySelectorAll(".error-validation").length;
+    let erroEncontrado = formNiveis.querySelectorAll(".error-validation").length;
 
-    if (validado === 0) {
-        console.log(formNiveis)
+    if (erroEncontrado === 0) {
+        pegarNiveis();
     }
 });
 
@@ -266,8 +227,47 @@ function pegarInformacoesBasicas() {
 }
 
 function pegarPerguntas() {
+
+    textoP1 = document.querySelector(".textoP1").value;
+    corfundoP1 = document.querySelector(".corP1").value;
+    corretaP1 = document.querySelector(".corretaP1").value;
+    urlCorretaP1 = document.querySelector(".corretaURL-P1").value;
+    incorretaP1_1 = document.querySelector(".incorretaP1-1").value;
+    incorretaP1_1URL = document.querySelector(".incorretaP1-1URL").value;
+
+    textoP2 = document.querySelector(".textoP2").value;
+    corfundoP2 = document.querySelector(".corP2").value;
+    corretaP2 = document.querySelector(".corretaP2").value;
+    urlCorretaP2 = document.querySelector(".corretaURL-P2").value;
+    incorretaP2_1 = document.querySelector(".incorretaP2-1").value;
+    incorretaP2_1URL = document.querySelector(".incorretaP2-1URL").value;
+
+    textoP3 = document.querySelector(".textoP3").value;
+    corfundoP3 = document.querySelector(".corP3").value;
+    corretaP3 = document.querySelector(".corretaP3").value;
+    urlCorretaP3 = document.querySelector(".corretaURL-P3").value;
+    incorretaP3_1 = document.querySelector(".incorretaP3-1").value;
+    incorretaP3_1URL = document.querySelector(".incorretaP3-1URL").value;
+
     formPerguntas.classList.add("esconder");
     formNiveis.classList.remove("esconder");
+}
+
+function pegarNiveis() {
+
+    tituloLevel1 = document.querySelector(".lvlTitle1").value;
+    acerto1 = document.querySelector(".acerto1").value;
+    url1 = document.querySelector(".URLlvl1").value;
+    desc1 = document.querySelector(".descLVL1").value;
+    tituloLevel2 = document.querySelector(".lvlTitle2").value;
+    acerto2 = document.querySelector(".acerto2").value;
+    url2 = document.querySelector(".URLlvl2").value;
+    desc2 = document.querySelector(".descLVL2").value;
+
+    finalizarQuizz();
+
+    formNiveis.classList.add("esconder");
+    telaSucesso.classList.remove("esconder");
 }
 
 function renderizarPerguntas() {
@@ -281,7 +281,7 @@ function renderizarPerguntas() {
                                 </div>
                                 <div class="question esconder">
                                     <div class="campo">
-                                        <input type="text" placeholder="Texto da pergunta" class="textP${i + 1}" minlength="20" required>
+                                        <input type="text" placeholder="Texto da pergunta" class="textoP${i + 1}" minlength="20" required>
                                     </div>
                                     <div class="campo">
                                         <input type="text" placeholder="Cor de fundo da pergunta" class="corP${i + 1}" hexvalidate required>
@@ -328,13 +328,92 @@ function renderizarPerguntas() {
     submitPerguntas.addEventListener('click', function (event) {
         event.preventDefault();
         validacao.validar(formPerguntas);
-    
-        let validado = formPerguntas.querySelectorAll(".error-validation").length;
-    
-        if (validado === 0) {
+
+        let erroEncontrado = formPerguntas.querySelectorAll(".error-validation").length;
+
+        if (erroEncontrado === 0) {
             pegarPerguntas();
         }
     });
+}
+
+function finalizarQuizz() {
+
+    let perguntas = {
+        title: titulo,
+        image: urlImagem,
+        questions: [
+            {
+                title: textoP1,
+                color: corfundoP1,
+                answers: [
+                    {
+                        text: corretaP1,
+                        image: urlCorretaP1,
+                        isCorrectAnswer: true
+                    },
+                    {
+                        text: incorretaP1_1,
+                        image: incorretaP1_1URL,
+                        isCorrectAnswer: false
+                    }
+                ]
+            },
+            {
+                title: textoP2,
+                color: corfundoP2,
+                answers: [
+                    {
+                        text: corretaP2,
+                        image: urlCorretaP2,
+                        isCorrectAnswer: true
+                    },
+                    {
+                        text: incorretaP2_1,
+                        image: incorretaP2_1URL,
+                        isCorrectAnswer: false
+                    }
+                ]
+            },
+            {
+                title: textoP3,
+                color: corfundoP3,
+                answers: [
+                    {
+                        text: corretaP3,
+                        image: urlCorretaP3,
+                        isCorrectAnswer: true
+                    },
+                    {
+                        text: incorretaP3_1,
+                        image: incorretaP3_1URL,
+                        isCorrectAnswer: false
+                    }
+                ]
+            }
+        ],
+        levels: [
+            {
+                title: tituloLevel1,
+                image: url1,
+                text: desc1,
+                minValue: 0
+            },
+            {
+                title: tituloLevel2,
+                image: url2,
+                text: desc2,
+                minValue: 50
+            }
+        ]
+    }
+
+    const promisse = axios.post(`${API}quizzes`, perguntas);
+    promisse.then(enviarQuizz);
+}
+
+function enviarQuizz(promise) {
+    console.log(promise.data);
 }
 
 function abrirLVL(lvl) {
@@ -399,12 +478,12 @@ function renderizarposts1(response) {
              ${posts.questions[i].title} 
         </div>
         <div class="container_respostas"> </div>
-        </div>`  
+        </div>`
     }
     const containerrespostas = document.querySelectorAll(".container_respostas")
     for (let i = 0; i < containerrespostas.length; i++) {
-        respostas=posts.questions[i].answers
-        respostas=randomize()
+        respostas = posts.questions[i].answers
+        respostas = randomize()
         for (let j = 0; j < posts.questions[i].answers.length; j++) {
             containerrespostas[i].innerHTML += `<div class="resposta" id="${respostas[j].isCorrectAnswer}"onclick="checarResposta(this)">
         <img class="imagens_resposta" src="${respostas[j].image}" alt="">
@@ -413,58 +492,58 @@ function renderizarposts1(response) {
         }
     }
 }
- const randomize = () => {
+const randomize = () => {
     let respostas_aleatorias = []
-     for (let i=0;i<respostas.length;i++) {
-         respostas_aleatorias[i]=  respostas[i]
-     }
-          for (let i = 0; i < (respostas_aleatorias.length); i++) {
+    for (let i = 0; i < respostas.length; i++) {
+        respostas_aleatorias[i] = respostas[i]
+    }
+    for (let i = 0; i < (respostas_aleatorias.length); i++) {
         let x = respostas_aleatorias[i];
         let y = Math.floor(Math.random() * (i + 1));
         respostas_aleatorias[i] = respostas_aleatorias[y];
         respostas_aleatorias[y] = x;
     }
     return respostas_aleatorias
- }
- let texto
- let contador
- let container
- function checarResposta(clicked){
-     if(clicked.parentNode.querySelectorAll(".errada").length>1){
-         return ;
-     }
-     else{
-            if (clicked.id === "true"){
-                container = clicked.parentNode.querySelectorAll('[id=false]');
-                for (let i=0;i<container.length;i++){
-                    container[i].classList.add("opacidade")
-                    texto = container[i].querySelector("p")
-                    texto.classList.add("errada")
-                }
-                texto= clicked.querySelector("p")
-                texto.classList.add("certa")
-                contador ++
-                setTimeout(scrolle,2000)
-            } else{
-                contador ++
-                container = clicked.parentNode.querySelectorAll(".resposta");
-                for (let i=0;i<container.length;i++){
-                    container[i].classList.add("opacidade")
-                    texto = container[i].querySelector("p")
-                    texto.classList.add("errada")
-                }   
-                texto= clicked.parentNode.querySelector('[id=true]')
-                console.log(texto)
-                texto.querySelector("p").classList.remove("errada")
-                texto.querySelector("p").classList.add("certa")
-                clicked.classList.remove("opacidade")
-                setTimeout(scrolle1,2000)
+}
+let texto
+let contador
+let container
+function checarResposta(clicked) {
+    if (clicked.parentNode.querySelectorAll(".errada").length > 1) {
+        return;
+    }
+    else {
+        if (clicked.id === "true") {
+            container = clicked.parentNode.querySelectorAll('[id=false]');
+            for (let i = 0; i < container.length; i++) {
+                container[i].classList.add("opacidade")
+                texto = container[i].querySelector("p")
+                texto.classList.add("errada")
             }
+            texto = clicked.querySelector("p")
+            texto.classList.add("certa")
+            contador++
+            setTimeout(scrolle, 2000)
+        } else {
+            contador++
+            container = clicked.parentNode.querySelectorAll(".resposta");
+            for (let i = 0; i < container.length; i++) {
+                container[i].classList.add("opacidade")
+                texto = container[i].querySelector("p")
+                texto.classList.add("errada")
+            }
+            texto = clicked.parentNode.querySelector('[id=true]')
+            console.log(texto)
+            texto.querySelector("p").classList.remove("errada")
+            texto.querySelector("p").classList.add("certa")
+            clicked.classList.remove("opacidade")
+            setTimeout(scrolle1, 2000)
+        }
     }
 
-    }
+}
 
- function scrolle() {
+function scrolle() {
     document.querySelectorAll(".container_respostas")[1].scrollIntoView();
 }
 function scrolle1() {

@@ -77,7 +77,8 @@ strong {
     object-fit: cover;
     object-position: 50% 50%;
 }
-.certa{
+
+.certa {
     font-family: Roboto;
     font-size: 20px;
     font-weight: 700;
@@ -86,17 +87,19 @@ strong {
     text-align: left;
     color: #009C22;
 }
-.errada{
+
+.errada {
     font-family: Roboto;
     font-size: 20px;
     font-weight: 700;
     line-height: 23px;
     letter-spacing: 0em;
     text-align: left;
-    color:#FF4B4B;
+    color: #FF4B4B;
 
 }
-.opacidade{
+
+.opacidade {
     opacity: 0.3;
 }
 
@@ -388,6 +391,48 @@ input[type=number] {
     margin-bottom: 10px;
 }
 
+.sucesso-quizz {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    margin-top: 120px;
+    align-items: center;
+}
+
+.card2 {
+    margin-top: 30px;
+    position: relative;
+}
+
+.card2 span {
+    position: absolute;
+    font-weight: 400;
+    bottom: 20px;
+    left: 30px;
+    font-size: 19px;
+    color: #FFFFFF;
+}
+
+.card2 img {
+    width: 30vw;
+    height: 266px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.sucesso-quizz.sucesso input[type="submit"] {
+    width: 45vw;
+    height: 44px;
+}
+
+.sucesso-quizz.sucesso a {
+    margin: 20px 0;
+    text-decoration: none;
+    color: #818181;
+    font-size: 18px;
+    font-weight: 400;
+}
+
 .esconder {
     display: none;
 }
@@ -414,6 +459,15 @@ input[type=number] {
         width: 323px;
         font-size: 18px;
         margin-top: 53px;
+    }
+
+    .card2 img {
+        width: 90vw;
+        height: 181px;
+    }
+
+    .sucesso-quizz.sucesso a {
+        font-size: 18px;
     }
 
 }

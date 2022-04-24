@@ -502,7 +502,7 @@ input[type=number] {
 }
 
 .card2 img {
-    width: 30vw;
+    width: 90vw;
     height: 266px;
     border-radius: 5px;
     object-fit: cover;
@@ -550,7 +550,6 @@ input[type=number] {
     }
 
     .card2 img {
-        width: 90vw;
         height: 181px;
     }
 

@@ -593,21 +593,14 @@ function meusQuizzes() {
     promisse.then(renderizarNossosposts)
     promisse.catch(atualizar)
 }
-function renderizarNossosposts(response) {
-    const posts = response.data
+function renderizarNossosposts() {
     const nossos_quizzes = document.querySelector(".nossos_quizzes_lista")
     const quizzes_criados = JSON.parse(localStorage.getItem("quizz"));
-    for (let i = 0; i < posts.length; i++) {
-        for (let j = 0; j < quizzes_criados.length; j++) {
-            if (quizzes_criados[j] !== null) {
-                if (posts[i].id == quizzes_criados[j].id) {
-                    nossos_quizzes.innerHTML += `<div class='post' id="${posts[i].id}" onclick="pegarpost(this.id)"> <img class="imagem_meuquizz" src="${posts[i].image}" alt=""> <div class="texto_posts"> ${posts[i].title} </div> </div>`
-                }
-
+    console.log(quizzes_criados)
+        for (let i = 0; i < quizzes_criados.length; i++) {
+                    nossos_quizzes.innerHTML += `<div class='post' id="${quizzes_criados[i].id}" onclick="pegarpost(this.id)"> <img class="imagem_meuquizz" src="${quizzes_criados[i].image}" alt=""> <div class="texto_posts"> ${quizzes_criados[i].title} </div> </div>`
             }
         }
-    }
-}
 function pegarpost(clicked_id) {
     document.querySelector(".posts").classList.add("esconder")
     // const promisse = axios.get(`${API}quizzes/84`)
@@ -631,7 +624,8 @@ function renderizarposts1(response) {
     const quiztopo = document.querySelector(".quiz_topo.esconder")
     pagina_quizz.classList.remove("esconder")
     quiztopo.classList.remove("esconder")
-    quiztopo.innerHTML = `<img src="${posts.image}" alt="">`
+    
+    quiztopo.innerHTML = `<img src="${posts.image}" alt=""> <div class="texto_posts1"> ${posts.title} </div>`
     for (let i = 0; i < posts.questions.length; i++) {
         quiz_conteudo.innerHTML += `<div class="container_pergunta">
         <div class="pergunta" style="background-color:${posts.questions[i].color}"> 
@@ -670,7 +664,7 @@ let contador = 0
 let container
 let respostacerta = 0
 function checarResposta(clicked) {
-    if (clicked.parentNode.querySelectorAll(".errada").length > 1) {
+    if (clicked.parentNode.querySelectorAll(".errada").length >= 1) {
         return;
     }
     else {

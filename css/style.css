@@ -287,6 +287,10 @@ strong {
     line-height: 23px;
     letter-spacing: 0em;
 }
+.nossos_quizzes_lista{
+    display: flex;
+    flex-wrap: wrap;
+}
 
 .nossos_quizzes>div {
     display: flex;

@@ -423,6 +423,7 @@ function finalizarQuizz() {
 }
 
 function enviarQuizz(response) {
+    alert(response.data.id)
     console.log(response.data);
     formNiveis.classList.add("esconder");
     telaSucesso.classList.remove("esconder");
@@ -436,20 +437,33 @@ function enviarQuizz(response) {
     </div>
     <input class="botao" type="submit" value="Acessar quizz">
     <a href="" onclick="atualizar();">Voltar para home</a>`
-    let quizz_usuario = quizz.data;
-    const localQuizz = localStorage.getItem("quizz");
-    if (localQuizz !== null) {
-        let arrayQuizz = JSON.parse(localQuizz);
-        arrayQuizz.push(quizz_usuario);
-        let arrayString = JSON.stringify(arrayQuizz);
-        localStorage.setItem("quizz", arrayString);
-    }
-    else {
-        let arrayQuizz = [quizz_usuario];
-        let arrayString = JSON.stringify(arrayQuizz);
-        localStorage.setItem("quizz", arrayString);
-    }
-
+    // let quizz_usuario = quizz.data;
+    // const localQuizz = localStorage.getItem("quizz");
+    // if (localQuizz !== null) {
+    //     let arrayQuizz = JSON.parse(localQuizz);
+    //     arrayQuizz.push(quizz_usuario);
+    //     let arrayString = JSON.stringify(arrayQuizz);
+    //     localStorage.setItem("quizz", arrayString);
+    // }
+    // else {
+    //     let arrayQuizz = [quizz_usuario];
+    //     let arrayString = JSON.stringify(arrayQuizz);
+    //     localStorage.setItem("quizz", arrayString);
+    // }
+    // const localID = localStorage.getItem("id");
+    // if (localID !== null) {
+    //     let posts_ID = JSON.parse(localID);
+    //     posts_ID.push(response.data.id);
+    //     let postString = JSON.stringify(posts_ID);
+    //     localStorage.setItem("id", postString);
+    // }
+    // else {
+        let posts_ID = response.data.id;
+        console.log(posts_ID)
+        let postString = JSON.stringify(posts_ID);
+        console.log(postString)
+        localStorage.setItem("id", postString);
+    // }
     let submitSucesso = telaSucesso.querySelector(".botao");
 
     submitSucesso.addEventListener('click', function(){
@@ -478,18 +492,36 @@ function abrirPergunta(pergunta) {
 
 function pegarquizzes() {
     const promisse = axios.get(`${API}quizzes`)
+    const quizzes_criados = localStorage.getItem("id");
+    if(quizzes_criados !==null){
+        meusQuizzes()
+    }
     promisse.then(renderizarposts)
     promisse.catch(atualizar)
 }
 pegarquizzes()
 function renderizarposts(response) {
     const posts = response.data
-    console.log(response.data)
     const listaposts = document.querySelector(".lista_posts")
     for (let i = 0; i < posts.length; i++) {
         listaposts.innerHTML += `<div class='post' id="${posts[i].id}" onclick="pegarpost(this.id)" style="background-image:url(${posts[i].image}};"> <div class="texto_posts"> ${posts[i].title} </div> </div>`
         // listaposts.innerHTML+=`<div class='post' style="background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(${posts[i].image});background-size: 100% 100%;"> <div class="texto_posts"> ${posts[i].title} </div> </div>`
     }
+}
+function meusQuizzes() {
+    document.querySelector(".nossos_quizzes").classList.add("esconder")
+    document.querySelector(".nossos_quizzes_ativado").classList.remove("esconder")
+    const quizzes_criados = localStorage.getItem("id");
+    const promisse = axios.get(`${API}quizzes/${quizzes_criados}`)
+    promisse.then(renderizarNossosposts)
+    promisse.catch(atualizar)
+    
+}
+function renderizarNossosposts(response){
+    const posts = response.data
+    const nossos_quizzes = document.querySelector(".nossos_quizzes_lista")
+    nossos_quizzes.innerHTML += `<div class='post' id="${posts.id}" onclick="pegarpost(this.id)" style="background-image:url(${posts.image}};"> <div class="texto_posts"> ${posts.title} </div> </div>`
+    // listaposts.innerHTML+=`<div class='post' style="background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(${posts[i].image});background-size: 100% 100%;"> <div class="texto_posts"> ${posts[i].title} </div> </div>`
 }
 function pegarpost(clicked_id) {
     document.querySelector(".posts").classList.add("esconder")
@@ -635,6 +667,7 @@ function checarResposta(clicked) {
  }
 }
 function reiniciar () {
+    alert("entrou aqui")
     const certas= document.querySelectorAll(".certa")
     for(i=0;i<certas.length;i++){
         certas[i].classList.remove("certa")

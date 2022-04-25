@@ -266,6 +266,27 @@ strong {
     background-color: #fafafa;
 
 }
+.nossos_quizzes_ativado{
+    width: 1051px;
+    display: flex;
+    flex-direction: column;
+}
+.titulo_nossos_quizzes{
+    display: flex;
+    align-items: center;
+}
+.mais{
+    font-size: 31px;
+    color: red;
+    margin-left: 17px;
+}
+.titulo_nossos_quizzes p{
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 23px;
+    letter-spacing: 0em;
+}
 
 .nossos_quizzes>div {
     display: flex;

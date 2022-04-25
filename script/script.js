@@ -489,7 +489,6 @@ function renderizarposts(response) {
     const quizzes_criados = localStorage.getItem("id");
     for (let i = 0; i < posts.length; i++) {
         if (posts[i].id==quizzes_criados){
-            alert("Olá")
         } else{
             listaposts.innerHTML += `<div class='post' id="${posts[i].id}" onclick="pegarpost(this.id)" style="background-image:url(${posts[i].image}};"> <div class="texto_posts"> ${posts[i].title} </div> </div>`
             // listaposts.innerHTML+=`<div class='post' style="background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(${posts[i].image});background-size: 100% 100%;"> <div class="texto_posts"> ${posts[i].title} </div> </div>`
@@ -537,7 +536,6 @@ let posts
 const quiz_conteudo = document.querySelector(".quiz_conteudo")
 function renderizarposts1(response) {
     posts = response.data
-    console.log(posts)
     const pagina_quizz = document.querySelector(".pagina_quizz.esconder")
     const quiztopo = document.querySelector(".quiz_topo.esconder")
     pagina_quizz.classList.remove("esconder")
@@ -606,7 +604,6 @@ function checarResposta(clicked) {
                 texto.classList.add("errada")
             }
             texto = clicked.parentNode.querySelector('[id=true]')
-            console.log(texto)
             texto.querySelector("p").classList.remove("errada")
             texto.querySelector("p").classList.add("certa")
             clicked.classList.remove("opacidade")
@@ -662,7 +659,6 @@ function checarResposta(clicked) {
  }
 }
 function reiniciar () {
-    alert("entrou aqui")
     const certas= document.querySelectorAll(".certa")
     for(i=0;i<certas.length;i++){
         certas[i].classList.remove("certa")

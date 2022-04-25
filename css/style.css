@@ -112,6 +112,7 @@ strong {
     flex-direction: column;
     border-radius: 0px;
 }
+
 .container_pergunta {
     height: 676px;
     width: 759px;
@@ -119,7 +120,8 @@ strong {
     box-shadow: 0px 0px 10px 0px #0000000D;
     padding: 28px 37px;
 }
-.container_final{
+
+.container_final {
     width: 759px;
     border-radius: 0px;
     background-color: #ffffff;
@@ -127,7 +129,8 @@ strong {
     margin-top: 44px;
 
 }
-.container_final > div{
+
+.container_final>div {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -135,17 +138,20 @@ strong {
     margin: 0 20px;
     margin-top: 18px;
 }
-.container_final_imagens{
+
+.container_final_imagens {
     width: 100%;
     padding: 20px 0;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.esquerda{
+
+.esquerda {
     width: 50%;
 }
-.direita{
+
+.direita {
     display: flex;
     align-items: flex-start;
     width: 50%;
@@ -158,7 +164,8 @@ strong {
     letter-spacing: 0em;
     color: #484848;
 }
-.imagem_resultado{
+
+.imagem_resultado {
     height: 273px;
     width: 364px;
     object-fit: cover;
@@ -179,10 +186,11 @@ strong {
     align-items: center;
     color: #FFFFFF;
 }
+
 .pergunta1 {
     padding: 35px 38px;
     height: 99px;
-    width: 100% ;
+    width: 100%;
     border-radius: 0px;
     font-family: Roboto;
     font-size: 23px;
@@ -196,7 +204,8 @@ strong {
     background-color: #EC362D;
 
 }
-.reiniciar{
+
+.reiniciar {
     height: 52px;
     width: 260px;
     background-color: #EC362D;
@@ -210,9 +219,10 @@ strong {
     margin-bottom: 16px;
     border-radius: 15px;
     color: #FFF5F4;
-
+    cursor: pointer;
 }
-.voltar_home{
+
+.voltar_home {
     height: 44px;
     width: 220px;
     font-family: Roboto;
@@ -222,6 +232,7 @@ strong {
     letter-spacing: 0em;
     text-align: center;
     color: #818181;
+    cursor: pointer;
 }
 
 .resposta {
@@ -266,28 +277,33 @@ strong {
     background-color: #fafafa;
 
 }
-.nossos_quizzes_ativado{
+
+.nossos_quizzes_ativado {
     width: 1051px;
     display: flex;
     flex-direction: column;
 }
-.titulo_nossos_quizzes{
+
+.titulo_nossos_quizzes {
     display: flex;
     align-items: center;
 }
-.mais{
+
+.mais {
     font-size: 31px;
     color: red;
     margin-left: 17px;
 }
-.titulo_nossos_quizzes p{
+
+.titulo_nossos_quizzes p {
     font-family: Roboto;
     font-size: 20px;
     font-weight: 700;
     line-height: 23px;
     letter-spacing: 0em;
 }
-.nossos_quizzes_lista{
+
+.nossos_quizzes_lista {
     display: flex;
     flex-wrap: wrap;
 }

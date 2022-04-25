@@ -503,7 +503,7 @@ function finalizarQuizz() {
             }
         ]
     }
-
+    console.log(quizz)
     const promisse = axios.post(`${API}quizzes`, quizz);
     promisse.then(enviarQuizz);
 }
@@ -561,10 +561,6 @@ function abrirPergunta(pergunta) {
 
 function pegarquizzes() {
     const promisse = axios.get(`${API}quizzes`)
-    const quizzes_criados = JSON.parse(localStorage.getItem("quizz"));
-    if (quizzes_criados !== null) {
-        meusQuizzes()
-    }
     promisse.then(renderizarposts)
     promisse.catch(atualizar)
 }
@@ -572,16 +568,24 @@ pegarquizzes()
 function renderizarposts(response) {
     const posts = response.data
     const listaposts = document.querySelector(".lista_posts")
-    const quizzes_criados = localStorage.getItem("id");
+    const quizzes_criados = JSON.parse(localStorage.getItem("quizz"));
+    console.log(posts)
     for (let i = 0; i < posts.length; i++) {
-        if (posts[i].id == quizzes_criados) {
-        } else {
-            listaposts.innerHTML += `<div class='post' id="${posts[i].id}" onclick="pegarpost(this.id)" style="background-image:url(${posts[i].image}};"> <div class="texto_posts"> ${posts[i].title} </div> </div>`
-            // listaposts.innerHTML+=`<div class='post' style="background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(${posts[i].image});background-size: 100% 100%;"> <div class="texto_posts"> ${posts[i].title} </div> </div>`
+                listaposts.innerHTML += `<div class='post' id="${posts[i].id}" onclick="pegarpost(this.id)"> <img class="imagem_meuquizz" src="${posts[i].image}" alt="">  <div class="texto_posts"> ${posts[i].title} </div> </div>`
+                // listaposts.innerHTML+=`<div class='post' style="background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(${posts[i].image});background-size: 100% 100%;"> <div class="texto_posts"> ${posts[i].title} </div> </div>`
+        } 
+        let retirar
+        for (i=0;i<quizzes_criados.length;i++){
+            retirar=document.getElementById(quizzes_criados[i].id)
+            if (retirar!==null){
+                retirar.remove()
+            }
         }
-
+        if (quizzes_criados !== null) {
+            meusQuizzes()
+        }
+      
     }
-}
 function meusQuizzes() {
     document.querySelector(".nossos_quizzes").classList.add("esconder")
     document.querySelector(".nossos_quizzes_ativado").classList.remove("esconder")
@@ -597,8 +601,9 @@ function renderizarNossosposts(response) {
         for (let j = 0; j < quizzes_criados.length; j++) {
             if (quizzes_criados[j] !== null) {
                 if (posts[i].id == quizzes_criados[j].id) {
-                    nossos_quizzes.innerHTML += `<div class='post' id="${posts[i].id}" onclick="pegarpost(this.id)" style="background-image:url(${posts[i].image}};"> <div class="texto_posts"> ${posts[i].title} </div> </div>`
+                    nossos_quizzes.innerHTML += `<div class='post' id="${posts[i].id}" onclick="pegarpost(this.id)"> <img class="imagem_meuquizz" src="${posts[i].image}" alt=""> <div class="texto_posts"> ${posts[i].title} </div> </div>`
                 }
+
             }
         }
     }

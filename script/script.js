@@ -679,7 +679,6 @@ function checarResposta(clicked) {
             texto.classList.add("certa")
             respostacerta++
             contador++
-            // setTimeout(scrolle, 2000)
         } else {
             contador++
             container = clicked.parentNode.querySelectorAll(".resposta");
@@ -692,7 +691,6 @@ function checarResposta(clicked) {
             texto.querySelector("p").classList.remove("errada")
             texto.querySelector("p").classList.add("certa")
             clicked.classList.remove("opacidade")
-            // setTimeout(scrolle1, 2000)
         }
     }
     const qntd_perguntas = document.querySelectorAll(".container_pergunta")
@@ -700,15 +698,16 @@ function checarResposta(clicked) {
         criarResultado()
 
     }
+    setTimeout(scrolle,2000,contador)
 
 }
 
-// function scrolle() {
-//     document.querySelectorAll(".container_respostas")[1].scrollIntoView();
-// }
-// function scrolle1() {
-//     document.querySelectorAll(".container_respostas")[2].scrollIntoView();
-// }
+function scrolle(numero) {
+    document.querySelectorAll(".container_pergunta")[numero].scrollIntoView();
+}
+function scrolle3() {
+    document.querySelector(".container_final").scrollIntoView();
+}
 function criarResultado() {
     let acerto = (Number(respostacerta / posts.questions.length) * 100).toFixed(0)
     let valorMin
@@ -742,6 +741,7 @@ function criarResultado() {
         `
         }
     }
+    setTimeout(scrolle3, 2000)
 }
 function reiniciar() {
     const certas = document.querySelectorAll(".certa")

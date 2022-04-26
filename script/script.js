@@ -404,107 +404,154 @@ function renderizarNiveis() {
 }
 
 function finalizarQuizz() {
-
-    quizz = {
-        title: titulo,
-        image: urlImagem,
-        questions: [
-            {
-                title: textoP1,
-                color: corfundoP1,
-                answers: [
-                    {
-                        text: corretaP1,
-                        image: urlCorretaP1,
-                        isCorrectAnswer: true
-                    },
-                    {
-                        text: incorretaP1_1,
-                        image: incorretaP1_1URL,
-                        isCorrectAnswer: false
-                    },
-                    {
-                        text: incorretaP1_2,
-                        image: incorretaP1_2URL,
-                        isCorrectAnswer: false
-                    },
-                    {
-                        text: incorretaP1_3,
-                        image: incorretaP1_3URL,
-                        isCorrectAnswer: false
-                    }
-                ]
-            },
-            {
-                title: textoP2,
-                color: corfundoP2,
-                answers: [
-                    {
-                        text: corretaP2,
-                        image: urlCorretaP2,
-                        isCorrectAnswer: true
-                    },
-                    {
-                        text: incorretaP2_1,
-                        image: incorretaP2_1URL,
-                        isCorrectAnswer: false
-                    },
-                    {
-                        text: incorretaP2_2,
-                        image: incorretaP2_2URL,
-                        isCorrectAnswer: false
-                    },
-                    {
-                        text: incorretaP2_3,
-                        image: incorretaP2_3URL,
-                        isCorrectAnswer: false
-                    }
-                ]
-            },
-            {
-                title: textoP3,
-                color: corfundoP3,
-                answers: [
-                    {
-                        text: corretaP3,
-                        image: urlCorretaP3,
-                        isCorrectAnswer: true
-                    },
-                    {
-                        text: incorretaP3_1,
-                        image: incorretaP3_1URL,
-                        isCorrectAnswer: false
-                    },
-                    {
-                        text: incorretaP3_2,
-                        image: incorretaP3_2URL,
-                        isCorrectAnswer: false
-                    },
-                    {
-                        text: incorretaP3_3,
-                        image: incorretaP3_3URL,
-                        isCorrectAnswer: false
-                    }
-                ]
-            }
-        ],
-        levels: [
-            {
-                title: tituloLevel1,
-                image: url1,
-                text: desc1,
-                minValue: 0
-            },
-            {
-                title: tituloLevel2,
-                image: url2,
-                text: desc2,
-                minValue: 50
-            }
-        ]
+    let obj_api_geral={}
+    obj_api_geral.questions=[]
+    obj_api_geral.levels=[]
+    obj_api_geral.title=titulo
+    obj_api_geral.image=urlImagem
+    for (i=0;i<qtdPerguntas;i++){
+        let obj_api= {}
+        obj_api.title=formPerguntas.querySelector(`.textoP${i + 1}`).value
+        obj_api.color=formPerguntas.querySelector(`.corP${i + 1}`).value
+        obj_api.answers=[]
+        obj_api.answers.push({
+            text: formPerguntas.querySelector(`.corretaP${i + 1}`).value,
+            image: formPerguntas.querySelector(`.corretaURL-P${i + 1}`).value,
+            isCorrectAnswer:true
+        })
+        
+        obj_api.answers.push({
+            text: formPerguntas.querySelector(`.incorretaP${i + 1}-1`).value,
+            image: formPerguntas.querySelector(`.incorretaP${i + 1}-1URL`).value,
+            isCorrectAnswer:false
+        })
+        if(formPerguntas.querySelector(`.incorretaP${i + 1}-2`).value!==""){
+            obj_api.answers.push({
+                text: formPerguntas.querySelector(`.incorretaP${i + 1}-2`).value,
+                image: formPerguntas.querySelector(`.incorretaP${i + 1}-2URL`).value,
+                isCorrectAnswer:false
+            })
+        }
+        if(formPerguntas.querySelector(`.incorretaP${i + 1}-3`).value!==""){
+            obj_api.answers.push({
+                text: formPerguntas.querySelector(`.incorretaP${i + 1}-3`).value,
+                image: formPerguntas.querySelector(`.incorretaP${i + 1}-3URL`).value,
+                isCorrectAnswer:false
+            })
+            
+        }
+        obj_api_geral.questions.push(obj_api)
     }
-    console.log(quizz)
-    const promisse = axios.post(`${API}quizzes`, quizz);
+    for (i=0;i<qtdNiveis;i++){
+        let obj_api= []
+        obj_api.push({
+            title: formNiveis.querySelector(`.lvlTitle${i + 1}`).value,
+            image:formNiveis.querySelector(`.URLlvl${i + 1}`).value ,
+            text:formNiveis.querySelector(`.descLVL${i + 1}`).value , 
+            minValue: 0
+        })
+        obj_api_geral.levels.push(obj_api)
+    }
+    console.log(obj_api_geral)
+    // quizz = {
+    //     title: titulo,
+    //     image: urlImagem,
+    //     questions: [
+    //         {
+    //             title: textoP1,
+    //             color: corfundoP1,
+    //             answers: [
+    //                 {
+    //                     text: corretaP1,
+    //                     image: urlCorretaP1,
+    //                     isCorrectAnswer: true
+    //                 },
+    //                 {
+    //                     text: incorretaP1_1,
+    //                     image: incorretaP1_1URL,
+    //                     isCorrectAnswer: false
+    //                 },
+    //                 // {
+    //                 //     text: incorretaP1_2,
+    //                 //     image: incorretaP1_2URL,
+    //                 //     isCorrectAnswer: false
+    //                 // },
+    //                 // {
+    //                 //     text: incorretaP1_3,
+    //                 //     image: incorretaP1_3URL,
+    //                 //     isCorrectAnswer: false
+    //                 // }
+    //             ]
+    //         },
+    //         {
+    //             title: textoP2,
+    //             color: corfundoP2,
+    //             answers: [
+    //                 {
+    //                     text: corretaP2,
+    //                     image: urlCorretaP2,
+    //                     isCorrectAnswer: true
+    //                 },
+    //                 {
+    //                     text: incorretaP2_1,
+    //                     image: incorretaP2_1URL,
+    //                     isCorrectAnswer: false
+    //                 },
+    //                 {
+    //                     text: incorretaP2_2,
+    //                     image: incorretaP2_2URL,
+    //                     isCorrectAnswer: false
+    //                 },
+    //                 {
+    //                     text: incorretaP2_3,
+    //                     image: incorretaP2_3URL,
+    //                     isCorrectAnswer: false
+    //                 }
+    //             ]
+    //         },
+    //         {
+    //             title: textoP3,
+    //             color: corfundoP3,
+    //             answers: [
+    //                 {
+    //                     text: corretaP3,
+    //                     image: urlCorretaP3,
+    //                     isCorrectAnswer: true
+    //                 },
+    //                 {
+    //                     text: incorretaP3_1,
+    //                     image: incorretaP3_1URL,
+    //                     isCorrectAnswer: false
+    //                 },
+    //                 {
+    //                     text: incorretaP3_2,
+    //                     image: incorretaP3_2URL,
+    //                     isCorrectAnswer: false
+    //                 },
+    //                 {
+    //                     text: incorretaP3_3,
+    //                     image: incorretaP3_3URL,
+    //                     isCorrectAnswer: false
+    //                 }
+    //             ]
+    //         }
+    //     ],
+    //     levels: [
+    //         {
+    //             title: tituloLevel1,
+    //             image: url1,
+    //             text: desc1,
+    //             minValue: 0
+    //         },
+    //         {
+    //             title: tituloLevel2,
+    //             image: url2,
+    //             text: desc2,
+    //             minValue: 50
+    //         }
+    //     ]
+    // }
+    const promisse = axios.post(`${API}quizzes`, obj_api_geral);
     promisse.then(enviarQuizz);
 }
 
@@ -569,7 +616,6 @@ function renderizarposts(response) {
     const posts = response.data
     const listaposts = document.querySelector(".lista_posts")
     const quizzes_criados = JSON.parse(localStorage.getItem("quizz"));
-    console.log(posts)
     for (let i = 0; i < posts.length; i++) {
                 listaposts.innerHTML += `<div class='post' id="${posts[i].id}" onclick="pegarpost(this.id)"> <img class="imagem_meuquizz" src="${posts[i].image}" alt="">  <div class="texto_posts"> ${posts[i].title} </div> </div>`
                 // listaposts.innerHTML+=`<div class='post' style="background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(${posts[i].image});background-size: 100% 100%;"> <div class="texto_posts"> ${posts[i].title} </div> </div>`
@@ -596,7 +642,6 @@ function meusQuizzes() {
 function renderizarNossosposts() {
     const nossos_quizzes = document.querySelector(".nossos_quizzes_lista")
     const quizzes_criados = JSON.parse(localStorage.getItem("quizz"));
-    console.log(quizzes_criados)
         for (let i = 0; i < quizzes_criados.length; i++) {
                     nossos_quizzes.innerHTML += `<div class='post' id="${quizzes_criados[i].id}" onclick="pegarpost(this.id)"> <img class="imagem_meuquizz" src="${quizzes_criados[i].image}" alt=""> <div class="texto_posts"> ${quizzes_criados[i].title} </div> </div>`
             }

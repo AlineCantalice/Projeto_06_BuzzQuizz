@@ -443,14 +443,12 @@ function finalizarQuizz() {
         obj_api_geral.questions.push(obj_api)
     }
     for (i=0;i<qtdNiveis;i++){
-        let obj_api= []
-        obj_api.push({
+        obj_api_geral.levels.push({
             title: formNiveis.querySelector(`.lvlTitle${i + 1}`).value,
             image:formNiveis.querySelector(`.URLlvl${i + 1}`).value ,
             text:formNiveis.querySelector(`.descLVL${i + 1}`).value , 
             minValue: 0
         })
-        obj_api_geral.levels.push(obj_api)
     }
     console.log(obj_api_geral)
     // quizz = {

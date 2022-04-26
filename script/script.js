@@ -664,6 +664,7 @@ function criandoquizz() {
 }
 function renderizarposts1(response) {
     posts = response.data
+    console.log(posts)
     const pagina_quizz = document.querySelector(".pagina_quizz.esconder")
     const quiztopo = document.querySelector(".quiz_topo.esconder")
     pagina_quizz.classList.remove("esconder")
@@ -695,14 +696,12 @@ const randomize = () => {
     for (let i = 0; i < respostas.length; i++) {
         respostas_aleatorias[i] = respostas[i]
     }
-    console.log(respostas_aleatorias)
     for (let i = 0; i < (respostas_aleatorias.length); i++) {
         let x = respostas_aleatorias[i];
         let y = Math.floor(Math.random() * (i + 1));
         respostas_aleatorias[i] = respostas_aleatorias[y];
         respostas_aleatorias[y] = x;
     }
-    console.log(respostas_aleatorias)
     return respostas_aleatorias
 }
 let texto
@@ -758,6 +757,7 @@ function criarResultado() {
     let acerto = (Number(respostacerta / posts.questions.length) * 100).toFixed(0)
     let valorMin
     let levels = posts.levels.length
+    console.log(posts)
     quiz_conteudo.innerHTML +=
         `<div class="container_final"></div>
     <button class="reiniciar" onclick="reiniciar()" >
@@ -766,6 +766,11 @@ function criarResultado() {
     <p class="voltar_home" onclick="voltarParaHome()">
     Voltar para home
     </p>`
+    console.log(posts.levels)
+    posts.levels.sort((a, b) => {
+        return a.minValue - b.minValue;
+    });
+    console.log(posts.levels)
     const container_final = document.querySelector(".container_final")
     for (let i = 0; i < levels; i++) {
         valorMin = posts.levels[i].minValue

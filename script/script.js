@@ -604,6 +604,10 @@ function abrirPergunta(pergunta) {
 
 /* Funções que estou utilizando */
 
+let respostas
+let posts
+const quiz_conteudo = document.querySelector(".quiz_conteudo")
+
 function pegarquizzes() {
     const promisse = axios.get(`${API}quizzes`)
     promisse.then(renderizarposts)
@@ -658,9 +662,6 @@ function criandoquizz() {
     document.querySelector(".posts").classList.add("esconder");
     infoBasica.classList.remove("esconder");
 }
-let respostas
-let posts
-const quiz_conteudo = document.querySelector(".quiz_conteudo")
 function renderizarposts1(response) {
     posts = response.data
     const pagina_quizz = document.querySelector(".pagina_quizz.esconder")
@@ -694,12 +695,14 @@ const randomize = () => {
     for (let i = 0; i < respostas.length; i++) {
         respostas_aleatorias[i] = respostas[i]
     }
+    console.log(respostas_aleatorias)
     for (let i = 0; i < (respostas_aleatorias.length); i++) {
         let x = respostas_aleatorias[i];
         let y = Math.floor(Math.random() * (i + 1));
         respostas_aleatorias[i] = respostas_aleatorias[y];
         respostas_aleatorias[y] = x;
     }
+    console.log(respostas_aleatorias)
     return respostas_aleatorias
 }
 let texto
@@ -787,26 +790,49 @@ function criarResultado() {
     setTimeout(scrolle3, 2000)
 }
 function reiniciar() {
-    const certas = document.querySelectorAll(".certa")
-    for (i = 0; i < certas.length; i++) {
-        certas[i].classList.remove("certa")
-    }
-    const erradas = document.querySelectorAll(".errada")
-    for (i = 0; i < erradas.length; i++) {
-        erradas[i].classList.remove("errada")
-    }
-    const opacos = document.querySelectorAll(".opacidade")
-    for (i = 0; i < opacos.length; i++) {
-        opacos[i].classList.remove("opacidade")
-    }
-    document.querySelector(".container_final").remove()
-    document.querySelector(".reiniciar").remove()
-    document.querySelector(".voltar_home").remove()
+    // const certas = document.querySelectorAll(".certa")
+    // for (i = 0; i < certas.length; i++) {
+    //     certas[i].classList.remove("certa")
+    // }
+    // const erradas = document.querySelectorAll(".errada")
+    // for (i = 0; i < erradas.length; i++) {
+    //     erradas[i].classList.remove("errada")
+    // }
+    // const opacos = document.querySelectorAll(".opacidade")
+    // for (i = 0; i < opacos.length; i++) {
+    //     opacos[i].classList.remove("opacidade")
+    // }
+    // document.querySelector(".container_final").remove()
+    // document.querySelector(".reiniciar").remove()
+    // document.querySelector(".voltar_home").remove()
     contador = 0
     respostacerta = 0
     document.documentElement.scrollTop = 0
+    renderizarReinicio()
 }
 function voltarParaHome() {
     document.location.reload()
     document.documentElement.scrollTop = 0
+}
+function renderizarReinicio() {
+        quiz_conteudo.innerHTML=""
+    for (let i = 0; i < posts.questions.length; i++) {
+        quiz_conteudo.innerHTML += `<div class="container_pergunta">
+        <div class="pergunta" style="background-color:${posts.questions[i].color}"> 
+             ${posts.questions[i].title} 
+        </div>
+        <div class="container_respostas"> </div>
+        </div>`
+    }
+    const containerrespostas = document.querySelectorAll(".container_respostas")
+    for (let i = 0; i < containerrespostas.length; i++) {
+        respostas = posts.questions[i].answers
+        respostas = randomize()
+        for (let j = 0; j < posts.questions[i].answers.length; j++) {
+            containerrespostas[i].innerHTML += `<div class="resposta" id="${respostas[j].isCorrectAnswer}"onclick="checarResposta(this)">
+        <img class="imagens_resposta" src="${respostas[j].image}" alt="">
+        <p> ${respostas[j].text} </p>
+        </div>`
+        }
+    }
 }

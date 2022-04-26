@@ -6,9 +6,9 @@ class Validacao {
             'maxlength',
             'urlvalidate',
             'hexvalidate',
-            'minquantidade',
-            'minvalue',
-            'maxvalue'
+            'minquantidade'
+            // 'minvalue',
+            // 'maxvalue'
         ]
     }
 
@@ -110,31 +110,31 @@ class Validacao {
         }
     }
 
-    minvalue(input, minvalue) {
-        let inputvalue = input.value;
+    // minvalue(input, minvalue) {
+    //     let inputvalue = input.value;
 
-        let classeInput = input.classList;
+    //     let classeInput = input.classList;
 
-        let mensagemErro = `O valor minimo é ${minvalue}%`;
+    //     let mensagemErro = `O valor minimo é ${minvalue}%`;
 
-        if ((classeInput.value === "acerto1" || classeInput.value === "acerto2" || classeInput.value === "acerto3") && inputvalue !== 0) {
-            mensagemErro = `Pelo menos um dos campos precisa ter porcentagem ${minvalue}%`;
-        }
+    //     if ((classeInput.value === "acerto1" || classeInput.value === "acerto2" || classeInput.value === "acerto3") && inputvalue !== 0) {
+    //         mensagemErro = `Pelo menos um dos campos precisa ter porcentagem ${minvalue}%`;
+    //     }
 
-        if (inputvalue < minvalue) {
-            this.printMensagem(input, mensagemErro);
-        }
-    }
+    //     if (inputvalue < minvalue) {
+    //         this.printMensagem(input, mensagemErro);
+    //     }
+    // }
 
-    maxvalue(input, maxvalue) {
-        let inputvalue = input.value;
+    // maxvalue(input, maxvalue) {
+    //     let inputvalue = input.value;
 
-        let mensagemErro = `O valor maximo é ${maxvalue}%`;
+    //     let mensagemErro = `O valor maximo é ${maxvalue}%`;
 
-        if (inputvalue > maxvalue) {
-            this.printMensagem(input, mensagemErro);
-        }
-    }
+    //     if (inputvalue > maxvalue) {
+    //         this.printMensagem(input, mensagemErro);
+    //     }
+    // }
 
     printMensagem(input, msg) {
 
@@ -447,7 +447,7 @@ function finalizarQuizz() {
             title: formNiveis.querySelector(`.lvlTitle${i + 1}`).value,
             image:formNiveis.querySelector(`.URLlvl${i + 1}`).value ,
             text:formNiveis.querySelector(`.descLVL${i + 1}`).value , 
-            minValue: 0
+            minValue: Number(formNiveis.querySelector(`.acerto${i + 1}`).value)
         })
     }
     console.log(obj_api_geral)
